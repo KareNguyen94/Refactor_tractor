@@ -1,18 +1,15 @@
 import $ from 'jquery';
 // import users from './data/users-data';
-import recipeData from  './data/recipe-data';
-import ingredientData from './data/ingredient-data';
+// import recipeData from  './data/recipe-data';
+// import ingredientData from './data/ingredient-data';
 
 
-
-const receiveUserData = () => {
-  fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/users/wcUsersData')
+const receiveUserData = (dataSet, type, dataFunction) => {
+  fetch(`https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/${type}/${dataSet}`)
   .then(response => response.json())
-  .then(data => getUserData(data.wcUsersData))
+  .then(data => dataFunction(data[dataSet]))
   .catch(error => console.log(error.message))
 }
-
-
 
 
 import './css/base.scss';
@@ -44,9 +41,6 @@ let tagList = document.querySelector(".tag-list");
 let user;
 
 
-window.addEventListener("load", createCards);
-window.addEventListener("load", findTags);
-window.addEventListener("load", receiveUserData);
 allRecipesBtn.addEventListener("click", showAllRecipes);
 filterBtn.addEventListener("click", findCheckedBoxes);
 main.addEventListener("click", addToMyRecipes);
@@ -66,11 +60,11 @@ const getUserData = (data) => {
     </div>`;
   document.querySelector(".banner-image").insertAdjacentHTML("afterbegin",
     welcomeMsg);
-  findPantryInfo();
+  getIngredientData();
 };
 
 // CREATE RECIPE CARDS
-function createCards() {
+const createRecipeHandler = (recipeData) => {
   recipeData.forEach(recipe => {
     let recipeInfo = new Recipe(recipe);
     let shortRecipeName = recipeInfo.name;
@@ -81,6 +75,11 @@ function createCards() {
     addToDom(recipeInfo, shortRecipeName)
   });
 }
+
+const getRecipeData = (recipeData) => {
+  createRecipeHandler(recipeData);
+  findTags(recipeData);
+};
 
 function addToDom(recipeInfo, shortRecipeName) {
   let cardHtml = `
@@ -99,7 +98,7 @@ function addToDom(recipeInfo, shortRecipeName) {
 }
 
 // FILTER BY RECIPE TAGS
-function findTags() {
+function findTags(recipeData) {
   let tags = [];
   recipeData.forEach(recipe => {
     recipe.tags.forEach(tag => {
@@ -313,9 +312,9 @@ function showAllRecipes() {
 }
 
 // CREATE AND USE PANTRY
-function findPantryInfo() {
+function findPantryInfo(ingredientsData) {
   user.pantry.forEach(item => {
-    let itemInfo = ingredientData.find(ingredient => {
+    let itemInfo = ingredientsData.find(ingredient => {
       return ingredient.id === item.ingredient;
     });
     let originalIngredient = pantryInfo.find(ingredient => {
@@ -332,6 +331,7 @@ function findPantryInfo() {
   displayPantryInfo(pantryInfo.sort((a, b) => a.name.localeCompare(b.name)));
 }
 
+
 function displayPantryInfo(pantry) {
   pantry.forEach(ingredient => {
     let ingredientHtml = `<li><input type="checkbox" class="pantry-checkbox" id="${ingredient.name}">
@@ -340,6 +340,18 @@ function displayPantryInfo(pantry) {
       ingredientHtml);
   });
 }
+
+
+function getIngredientData() {
+  fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/ingredients/ingredientsData')
+  .then(response => response.json())
+  .then(data => {
+    findPantryInfo(data.ingredientsData)
+  })
+  .catch(error => console.log(error.message))
+
+}
+
 
 function findCheckedPantryBoxes() {
   let pantryCheckboxes = document.querySelectorAll(".pantry-checkbox");
@@ -369,3 +381,6 @@ function findRecipesWithCheckedIngredients(selected) {
     }
   })
 }
+
+receiveUserData('wcUsersData', 'users', getUserData);
+receiveUserData('recipeData', 'recipes', getRecipeData);
