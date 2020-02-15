@@ -1,7 +1,19 @@
 import $ from 'jquery';
-import users from './data/users-data';
+// import users from './data/users-data';
 import recipeData from  './data/recipe-data';
 import ingredientData from './data/ingredient-data';
+
+
+
+const receiveUserData = () => {
+  fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/users/wcUsersData')
+  .then(response => response.json())
+  .then(data => getUserData(data.wcUsersData))
+  .catch(error => console.log(error.message))
+}
+
+
+
 
 import './css/base.scss';
 import './css/styles.scss';
@@ -34,7 +46,7 @@ let user;
 
 window.addEventListener("load", createCards);
 window.addEventListener("load", findTags);
-window.addEventListener("load", generateUser);
+window.addEventListener("load", receiveUserData);
 allRecipesBtn.addEventListener("click", showAllRecipes);
 filterBtn.addEventListener("click", findCheckedBoxes);
 main.addEventListener("click", addToMyRecipes);
@@ -45,8 +57,8 @@ showPantryRecipes.addEventListener("click", findCheckedPantryBoxes);
 searchForm.addEventListener("submit", pressEnterSearch);
 
 // GENERATE A USER ON LOAD
-function generateUser() {
-  user = new User(users[Math.floor(Math.random() * users.length)]);
+const getUserData = (data) => {
+  user = new User(data[Math.floor(Math.random() * data.length)]);
   let firstName = user.name.split(" ")[0];
   let welcomeMsg = `
     <div class="welcome-msg">
@@ -55,7 +67,7 @@ function generateUser() {
   document.querySelector(".banner-image").insertAdjacentHTML("afterbegin",
     welcomeMsg);
   findPantryInfo();
-}
+};
 
 // CREATE RECIPE CARDS
 function createCards() {
@@ -303,7 +315,7 @@ function showAllRecipes() {
 // CREATE AND USE PANTRY
 function findPantryInfo() {
   user.pantry.forEach(item => {
-    let itemInfo = ingredientsData.find(ingredient => {
+    let itemInfo = ingredientData.find(ingredient => {
       return ingredient.id === item.ingredient;
     });
     let originalIngredient = pantryInfo.find(ingredient => {
