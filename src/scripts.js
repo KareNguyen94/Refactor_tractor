@@ -272,12 +272,19 @@ function pressEnterSearch(event) {
   searchRecipes();
 }
 
-function searchRecipes() {
-  showAllRecipes();
+
+function extractRecipes(recipeData) {
   let searchedRecipes = recipeData.filter(recipe => {
     return recipe.name.toLowerCase().includes(searchInput.value.toLowerCase());
   });
   filterNonSearched(createRecipeObject(searchedRecipes));
+
+}
+
+
+function searchRecipes() {
+  showAllRecipes();
+  receiveUserData('recipeData', 'recipes', extractRecipes);
 }
 
 function filterNonSearched(filtered) {
