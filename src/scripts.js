@@ -1,16 +1,4 @@
 import $ from 'jquery';
-// import users from './data/users-data';
-// import recipeData from  './data/recipe-data';
-// import ingredientData from './data/ingredient-data';
-
-
-const receiveUserData = (dataSet, type, dataFunction) => {
-  fetch(`https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/${type}/${dataSet}`)
-  .then(response => response.json())
-  .then(data => dataFunction(data[dataSet]))
-  .catch(error => console.log(error.message))
-}
-
 
 import './css/base.scss';
 import './css/styles.scss';
@@ -22,7 +10,6 @@ import './images/seasoning.png'
 
 import User from './user';
 import Recipe from './recipe';
-
 
 let allRecipesBtn = document.querySelector(".show-all-btn");
 let filterBtn = document.querySelector(".filter-btn");
@@ -40,7 +27,6 @@ let showPantryRecipes = document.querySelector(".show-pantry-recipes-btn");
 let tagList = document.querySelector(".tag-list");
 let user;
 
-
 allRecipesBtn.addEventListener("click", showAllRecipes);
 filterBtn.addEventListener("click", findCheckedBoxes);
 main.addEventListener("click", addToMyRecipes);
@@ -49,6 +35,13 @@ savedRecipesBtn.addEventListener("click", showSavedRecipes);
 searchBtn.addEventListener("click", searchRecipes);
 showPantryRecipes.addEventListener("click", findCheckedPantryBoxes);
 searchForm.addEventListener("submit", pressEnterSearch);
+
+const receiveUserData = (dataSet, type, dataFunction) => {
+  fetch(`https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/${type}/${dataSet}`)
+  .then(response => response.json())
+  .then(data => dataFunction(data[dataSet]))
+  .catch(error => console.log(error.message))
+}
 
 // GENERATE A USER ON LOAD
 const getUserData = (data) => {
@@ -210,11 +203,25 @@ function showSavedRecipes() {
 function openRecipeInfo(event) {
   fullRecipeInfo.style.display = "inline";
   let recipeId = event.path.find(e => e.id).id;
-  let recipe = recipeData.find(recipe => recipe.id === Number(recipeId));
-  generateRecipeTitle(recipe, generateIngredients(recipe));
-  addRecipeImage(recipe);
-  generateInstructions(recipe);
-  fullRecipeInfo.insertAdjacentHTML("beforebegin", "<section id='overlay'></div>");
+  // let recipe = recipeData.find(recipe => recipe.id === Number(recipeId));
+  fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/recipes/recipeData')
+    .then(response => response.json())
+    .then(data => fetchRecipe(data))
+      // let recipe = data.recipeData.find(recipe => recipe.id === Number(recipeId))
+      // let currentRecipe = new Recipe(recipe)
+      // console.log(currentRecipe)
+      // console.log(recipe)
+      // generateRecipeTitle(recipe, generateIngredients(recipe));
+      // addRecipeImage(recipe);
+      // generateInstructions(recipe);
+    
+    .catch(error => console.log(error.message))
+    
+    fullRecipeInfo.insertAdjacentHTML("beforebegin", "<section id='overlay'></div>");
+}
+
+function fetchRecipe() {
+  let recipe = data.recipeData.find(recipe => recipe.id === Number(recipeId))
 }
 
 function generateRecipeTitle(recipe, ingredients) {
@@ -271,7 +278,6 @@ function pressEnterSearch(event) {
   event.preventDefault();
   searchRecipes();
 }
-
 
 function extractRecipes(recipeData) {
   let searchedRecipes = recipeData.filter(recipe => {
@@ -348,7 +354,6 @@ function displayPantryInfo(pantry) {
   });
 }
 
-
 function getIngredientData() {
   fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/ingredients/ingredientsData')
   .then(response => response.json())
@@ -358,7 +363,6 @@ function getIngredientData() {
   .catch(error => console.log(error.message))
 
 }
-
 
 function findCheckedPantryBoxes() {
   let pantryCheckboxes = document.querySelectorAll(".pantry-checkbox");
