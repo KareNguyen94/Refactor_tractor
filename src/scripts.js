@@ -212,6 +212,8 @@ function openRecipeInfo(event) {
       fetchRecipe(recipe)
       // console.log('recipe inside then', recipe)
     })
+
+
       // let currentRecipe = new Recipe(recipe)
       // console.log(currentRecipe)
       // console.log(recipe)
@@ -225,9 +227,18 @@ function openRecipeInfo(event) {
 }
 
 function fetchRecipe(recipe) {
-  generateRecipeTitle(recipe, generateIngredients(recipe));
-  addRecipeImage(recipe);
-  generateInstructions(recipe);
+  fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/ingredients/ingredientsData')
+    .then(response => response.json())
+    .then(data => {
+      let ingredients = recipe.ingredients.forEach((recipeIngredient) => {
+        const ingredient = data.ingredientsData.find(ingredient => ingredient.id == recipeIngredient.id)
+        recipeIngredient.name = ingredient.name;
+      })
+      generateRecipeTitle(recipe, generateIngredients(recipe));
+      addRecipeImage(recipe);
+      generateInstructions(recipe);
+    })
+    .catch(error => console.log(error.message))
 }
 
 function generateRecipeTitle(recipe, ingredients) {
@@ -292,7 +303,6 @@ function extractRecipes(recipeData) {
     return recipe.name.toLowerCase().includes(searchInput.value.toLowerCase());
   });
   filterNonSearched(createRecipeObject(searchedRecipes));
-
 }
 
 
