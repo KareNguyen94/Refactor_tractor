@@ -61,6 +61,7 @@ const createRecipeHandler = (recipeData) => {
   recipeData.forEach(recipe => {
     let recipeInfo = new Recipe(recipe);
     let shortRecipeName = recipeInfo.name;
+    // console.log(recipeInfo)
     recipes.push(recipeInfo);
     if (recipeInfo.name.length > 40) {
       shortRecipeName = recipeInfo.name.substring(0, 40) + "...";
@@ -206,8 +207,11 @@ function openRecipeInfo(event) {
   // let recipe = recipeData.find(recipe => recipe.id === Number(recipeId));
   fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/recipes/recipeData')
     .then(response => response.json())
-    .then(data => fetchRecipe(data))
-      // let recipe = data.recipeData.find(recipe => recipe.id === Number(recipeId))
+    .then(data => {
+      let recipe = data.recipeData.find(recipe => recipe.id === Number(recipeId))
+      fetchRecipe(recipe)
+      // console.log('recipe inside then', recipe)
+    })
       // let currentRecipe = new Recipe(recipe)
       // console.log(currentRecipe)
       // console.log(recipe)
@@ -220,8 +224,10 @@ function openRecipeInfo(event) {
     fullRecipeInfo.insertAdjacentHTML("beforebegin", "<section id='overlay'></div>");
 }
 
-function fetchRecipe() {
-  let recipe = data.recipeData.find(recipe => recipe.id === Number(recipeId))
+function fetchRecipe(recipe) {
+  generateRecipeTitle(recipe, generateIngredients(recipe));
+  addRecipeImage(recipe);
+  generateInstructions(recipe);
 }
 
 function generateRecipeTitle(recipe, ingredients) {
@@ -238,8 +244,10 @@ function addRecipeImage(recipe) {
 }
 
 function generateIngredients(recipe) {
+  console.log(recipe)
   return recipe && recipe.ingredients.map(i => {
-    return `${capitalize(i.name)} (${i.quantity.amount} ${i.quantity.unit})`
+    return `${i.name} (${i.quantity.amount} ${i.quantity.unit})`
+    // add method of capitalize back in when we figure out ingredients
   }).join(", ");
 }
 
