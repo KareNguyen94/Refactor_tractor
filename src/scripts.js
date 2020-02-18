@@ -51,8 +51,7 @@ const getUserData = (data) => {
     <div class="welcome-msg">
       <h1>Welcome ${firstName}!</h1>
     </div>`;
-  document.querySelector(".banner-image").insertAdjacentHTML("afterbegin",
-    welcomeMsg);
+  $(".banner-image").prepend(welcomeMsg);
   getIngredientData();
 };
 
