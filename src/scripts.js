@@ -13,7 +13,7 @@ import Recipe from './recipe';
 
 let allRecipesBtn = document.querySelector(".show-all-btn");
 let fullRecipeInfo = document.querySelector(".recipe-instructions");
-let main = document.querySelector("main");
+let main = document.querySelector("main"); // for some reason we cant target this with jQuery without the variable declaration.
 let menuOpen = false;
 let pantryBtn = document.querySelector(".my-pantry-btn");
 let pantryInfo = [];
@@ -27,7 +27,6 @@ let tagList = document.querySelector(".tag-list");
 let user;
 
 allRecipesBtn.addEventListener("click", showAllRecipes);
-main.addEventListener("click", addToMyRecipes);
 pantryBtn.addEventListener("click", toggleMenu);
 savedRecipesBtn.addEventListener("click", showSavedRecipes);
 searchBtn.addEventListener("click", searchRecipes);
@@ -117,7 +116,7 @@ const capitalize = (words) => {
 
 // not working in es6
 const findCheckedBoxes = () => {
-  let tagCheckboxes = document.querySelectorAll(".checked-tag");
+  let tagCheckboxes = $(".checked-tag");
   let checkboxInfo = Array.from(tagCheckboxes)
   let selectedTags = checkboxInfo.filter(box => {
     return box.checked;
@@ -150,15 +149,14 @@ const filterRecipes = (filtered) => {
   hideUnselectedRecipes(foundRecipes)
 }
 
-function hideUnselectedRecipes(foundRecipes) {
+const hideUnselectedRecipes = (foundRecipes) => {
   foundRecipes.forEach(recipe => {
-    let domRecipe = document.getElementById(`${recipe.id}`);
-    domRecipe.style.display = "none";
+    $(`#${recipe.id}`).hide()
   });
 }
 
 // FAVORITE RECIPE FUNCTIONALITY
-function addToMyRecipes() {
+const addToMyRecipes = (event) =>  {
   if (event.target.className === "card-apple-icon") {
     let cardId = parseInt(event.target.closest(".recipe-card").id)
     if (!user.favoriteRecipes.includes(cardId)) {
@@ -407,7 +405,7 @@ function findRecipesWithCheckedIngredients(selected) {
   })
 }
 
-
 $(".filter-btn").click(findCheckedBoxes);
+$('main').on('click', addToMyRecipes)
 receiveUserData('wcUsersData', 'users', getUserData);
 receiveUserData('recipeData', 'recipes', getRecipeData);
