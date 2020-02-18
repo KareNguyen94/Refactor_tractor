@@ -60,7 +60,6 @@ const createRecipeHandler = (recipeData) => {
   recipeData.forEach(recipe => {
     let recipeInfo = new Recipe(recipe);
     let shortRecipeName = recipeInfo.name;
-    // console.log(recipeInfo)
     recipes.push(recipeInfo);
     if (recipeInfo.name.length > 40) {
       shortRecipeName = recipeInfo.name.substring(0, 40) + "...";
@@ -87,7 +86,7 @@ function addToDom(recipeInfo, shortRecipeName) {
       <h4>${recipeInfo.tags[0]}</h4>
       <img src="../images/apple-logo-outline.png" alt="unfilled apple icon" class="card-apple-icon">
     </div>`
-  main.insertAdjacentHTML("beforeend", cardHtml);
+  $(main).append(cardHtml);
 }
 
 // FILTER BY RECIPE TAGS
