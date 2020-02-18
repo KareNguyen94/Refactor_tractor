@@ -32,7 +32,7 @@ savedRecipesBtn.addEventListener("click", showSavedRecipes);
 searchBtn.addEventListener("click", searchRecipes);
 showPantryRecipes.addEventListener("click", findCheckedPantryBoxes);
 searchForm.addEventListener("submit", pressEnterSearch);
-
+main.addEventListener("click", addToMyRecipes);
 const receiveUserData = (dataSet, type, dataFunction) => {
   fetch(`https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/${type}/${dataSet}`)
   .then(response => response.json())
@@ -156,7 +156,8 @@ const hideUnselectedRecipes = (foundRecipes) => {
 }
 
 // FAVORITE RECIPE FUNCTIONALITY
-const addToMyRecipes = (event) =>  {
+// Event targeting not working with JQ for this function. Look into .on()
+function addToMyRecipes() { 
   if (event.target.className === "card-apple-icon") {
     let cardId = parseInt(event.target.closest(".recipe-card").id)
     if (!user.favoriteRecipes.includes(cardId)) {
@@ -173,7 +174,7 @@ const addToMyRecipes = (event) =>  {
   }
 }
 
-function isDescendant(parent, child) {
+const isDescendant = (parent, child) => {
   let node = child;
   while (node !== null) {
     if (node === parent) {
@@ -406,6 +407,6 @@ function findRecipesWithCheckedIngredients(selected) {
 }
 
 $(".filter-btn").click(findCheckedBoxes);
-$('main').on('click', addToMyRecipes)
+// $('main').on('click', addToMyRecipes)
 receiveUserData('wcUsersData', 'users', getUserData);
 receiveUserData('recipeData', 'recipes', getRecipeData);
