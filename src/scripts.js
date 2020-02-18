@@ -12,7 +12,6 @@ import User from './user';
 import Recipe from './recipe';
 
 let allRecipesBtn = document.querySelector(".show-all-btn");
-let filterBtn = document.querySelector(".filter-btn");
 let fullRecipeInfo = document.querySelector(".recipe-instructions");
 let main = document.querySelector("main");
 let menuOpen = false;
@@ -28,7 +27,6 @@ let tagList = document.querySelector(".tag-list");
 let user;
 
 allRecipesBtn.addEventListener("click", showAllRecipes);
-filterBtn.addEventListener("click", findCheckedBoxes);
 main.addEventListener("click", addToMyRecipes);
 pantryBtn.addEventListener("click", toggleMenu);
 savedRecipesBtn.addEventListener("click", showSavedRecipes);
@@ -73,7 +71,7 @@ const getRecipeData = (recipeData) => {
   findTags(recipeData);
 };
 
-function addToDom(recipeInfo, shortRecipeName) {
+const addToDom = (recipeInfo, shortRecipeName) => {
   let cardHtml = `
     <div class="recipe-card" id=${recipeInfo.id}>
       <h3 maxlength="40">${shortRecipeName}</h3>
@@ -90,7 +88,7 @@ function addToDom(recipeInfo, shortRecipeName) {
 }
 
 // FILTER BY RECIPE TAGS
-function findTags(recipeData) {
+const findTags = (recipeData) => {
   let tags = [];
   recipeData.forEach(recipe => {
     recipe.tags.forEach(tag => {
@@ -103,7 +101,7 @@ function findTags(recipeData) {
   listTags(tags);
 }
 
-function listTags(allTags) {
+const listTags = (allTags) => {
   allTags.forEach(tag => {
     let tagHtml = `<li><input type="checkbox" class="checked-tag" id="${tag}">
       <label for="${tag}">${capitalize(tag)}</label></li>`;
@@ -111,13 +109,14 @@ function listTags(allTags) {
   });
 }
 
-function capitalize(words) {
+const capitalize = (words) => {
   return words.split(" ").map(word => {
     return word.charAt(0).toUpperCase() + word.slice(1);
   }).join(" ");
 }
 
-function findCheckedBoxes() {
+// not working in es6
+const findCheckedBoxes = () => {
   let tagCheckboxes = document.querySelectorAll(".checked-tag");
   let checkboxInfo = Array.from(tagCheckboxes)
   let selectedTags = checkboxInfo.filter(box => {
@@ -126,7 +125,7 @@ function findCheckedBoxes() {
   findTaggedRecipes(selectedTags);
 }
 
-function findTaggedRecipes(selected) {
+const findTaggedRecipes = (selected) => {
   let filteredResults = [];
   selected.forEach(tag => {
     let allRecipes = recipes.filter(recipe => {
@@ -144,7 +143,7 @@ function findTaggedRecipes(selected) {
   }
 }
 
-function filterRecipes(filtered) {
+const filterRecipes = (filtered) => {
   let foundRecipes = recipes.filter(recipe => {
     return !filtered.includes(recipe);
   });
@@ -377,7 +376,6 @@ function getIngredientData() {
     findPantryInfo(data.ingredientsData)
   })
   .catch(error => console.log(error.message))
-
 }
 
 function findCheckedPantryBoxes() {
@@ -409,5 +407,7 @@ function findRecipesWithCheckedIngredients(selected) {
   })
 }
 
+
+$(".filter-btn").click(findCheckedBoxes);
 receiveUserData('wcUsersData', 'users', getUserData);
 receiveUserData('recipeData', 'recipes', getRecipeData);
