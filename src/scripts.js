@@ -11,28 +11,28 @@ import './images/seasoning.png'
 import User from './user';
 import Recipe from './recipe';
 
-let allRecipesBtn = document.querySelector(".show-all-btn");
+// let allRecipesBtn = document.querySelector(".show-all-btn");
 let fullRecipeInfo = document.querySelector(".recipe-instructions");
 let main = document.querySelector("main"); // for some reason we cant target this with jQuery without the variable declaration.
 let menuOpen = false;
-let pantryBtn = document.querySelector(".my-pantry-btn");
+// let pantryBtn = document.querySelector(".my-pantry-btn");
 let pantryInfo = [];
 let recipes = [];
-let savedRecipesBtn = document.querySelector(".saved-recipes-btn");
-let searchBtn = document.querySelector(".search-btn");
-let searchForm = document.querySelector("#search");
+// let savedRecipesBtn = document.querySelector(".saved-recipes-btn");
+// let searchBtn = document.querySelector(".search-btn");
+// let searchForm = document.querySelector("#search");
 let searchInput = document.querySelector("#search-input");
 let showPantryRecipes = document.querySelector(".show-pantry-recipes-btn");
 let tagList = document.querySelector(".tag-list");
 let user;
 
-allRecipesBtn.addEventListener("click", showAllRecipes);
-pantryBtn.addEventListener("click", toggleMenu);
+// allRecipesBtn.addEventListener("click", showAllRecipes);
+// pantryBtn.addEventListener("click", toggleMenu);
 // savedRecipesBtn.addEventListener("click", showSavedRecipes);
 
-searchBtn.addEventListener("click", searchRecipes);
+// searchBtn.addEventListener("click", searchRecipes);
 showPantryRecipes.addEventListener("click", findCheckedPantryBoxes);
-searchForm.addEventListener("submit", pressEnterSearch);
+// searchForm.addEventListener("submit", pressEnterSearch);
 main.addEventListener("click", addToMyRecipes);
 
 
@@ -284,12 +284,14 @@ const exitRecipe = () => {
   fullRecipeInfo.style.display = "none";
   document.getElementById("overlay").remove();
 
-  // while ($(".recipe-instructions:first-child") && $(".recipe-instructions").remove(".recipe-instructions:first-child"));
+  // $(".recipe-instructions:first-child") && $(".recipe-instructions").remove(".recipe-instructions:first-child");
   // $(".recipe-instructions").hide();
   // $("#overlay").remove();
 }
 
 // TOGGLE DISPLAYS
+
+// NOT WORKING/
 const showMyRecipesBanner = () => {
   document.querySelector(".welcome-msg").style.display = "none";
   document.querySelector(".my-recipes-banner").style.display = "block";
@@ -305,12 +307,12 @@ const showWelcomeBanner = () => {
 }
 
 // SEARCH RECIPES
-function pressEnterSearch(event) {
+const pressEnterSearch = (event) => {
   event.preventDefault();
   searchRecipes();
 }
 
-function extractRecipes(recipeData) {
+const extractRecipes = (recipeData) => {
   let searchedRecipes = recipeData.filter(recipe => {
     return recipe.name.toLowerCase().includes(searchInput.value.toLowerCase());
   });
@@ -318,12 +320,12 @@ function extractRecipes(recipeData) {
 }
 
 
-function searchRecipes() {
+const searchRecipes = () => {
   showAllRecipes();
   receiveUserData('recipeData', 'recipes', extractRecipes);
 }
 
-function filterNonSearched(filtered) {
+const filterNonSearched = (filtered) => {
   let found = recipes.filter(recipe => {
     let ids = filtered.map(f => f.id);
     return !ids.includes(recipe.id)
@@ -331,25 +333,27 @@ function filterNonSearched(filtered) {
   hideUnselectedRecipes(found);
 }
 
-function createRecipeObject(recipes) {
+const createRecipeObject = (recipes) => {
   recipes = recipes.map(recipe => new Recipe(recipe));
   return recipes
 }
 
-function toggleMenu() {
-  var menuDropdown = document.querySelector(".drop-menu");
+const toggleMenu = () => {
+  // var menuDropdown = document.querySelector(".drop-menu");
   menuOpen = !menuOpen;
   if (menuOpen) {
-    menuDropdown.style.display = "block";
+    // menuDropdown.style.display = "block";
+    $(".drop-menu").css('display', 'block')
   } else {
-    menuDropdown.style.display = "none";
+    // menuDropdown.style.display = "none";
+    $(".drop-menu").css('display', 'none')
   }
 }
 
-function showAllRecipes() {
+const showAllRecipes = () => {
   recipes.forEach(recipe => {
-    let domRecipe = document.getElementById(`${recipe.id}`);
-    domRecipe.style.display = "block";
+    // let domRecipe = document.getElementById(`${recipe.id}`);
+    $(`#${recipe.id}`).css('display', "block");
   });
   showWelcomeBanner();
 }
@@ -421,7 +425,11 @@ function findRecipesWithCheckedIngredients(selected) {
     }
   })
 }
-
+// allRecipesBtn.addEventListener("click", showAllRecipes);
+$('.show-all-btn').click(showAllRecipes)
+$('.my-pantry-btn').click(toggleMenu);
+$('.search-btn').click(searchRecipes);
+$('#search').submit(pressEnterSearch);
 $(".filter-btn").click(findCheckedBoxes);
 $(".saved-recipes-btn").click(showSavedRecipes)
 // $('main').on('click', addToMyRecipes)
