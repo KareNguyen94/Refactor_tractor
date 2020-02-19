@@ -211,7 +211,7 @@ function openRecipeInfo(event) {
     })
     .catch(error => console.log(error.message))
 
-    fullRecipeInfo.insertAdjacentHTML("beforebegin", "<section id='overlay'></div>");
+    fullRecipeInfo.insertAdjacentHTML("beforebegin", "<section id='overlay' class='page-overlay'></div>");
 }
 
 function fetchRecipe(recipe) {
@@ -231,8 +231,8 @@ function fetchRecipe(recipe) {
 
 function generateRecipeTitle(recipe, ingredients) {
   let recipeTitle = `
-    <button id="exit-recipe-btn">X</button>
-    <h3 id="recipe-title">${recipe.name}</h3>
+    <button id="exit-recipe-btn" class="exit-recipe-button">X</button>
+    <h3 id="recipe-title" class="recipe-header">${recipe.name}</h3>
     <h4>Ingredients</h4>
     <p>${ingredients}</p>`
   fullRecipeInfo.insertAdjacentHTML("beforeend", recipeTitle);

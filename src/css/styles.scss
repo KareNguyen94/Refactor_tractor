@@ -72,7 +72,7 @@ span {
   width: 35px;
 }
 
-#search {
+.search-form {
   border-radius: 15px 15px 15px 15px;
   border: 3px outset $light-green;
   box-shadow: 0px 0px 7px 0px #475d74;
@@ -84,7 +84,7 @@ span {
   width: 100%;
 }
 
-#search-input {
+.search-field {
   background-color: #b6dcca;
   background: -webkit-gradient( linear,left top, left bottom, color-stop(0, rgb(255, 255, 255)), color-stop(1, rgb(225,225,225)));
   border-radius: 10px 0px 0px 10px;
@@ -101,23 +101,23 @@ span {
   width: 100%;
 }
 
-#search-input:hover {
+.search-field:hover {
   box-shadow: inset 0px 0px 0px 0px white;
   transition: $slow-ease-in;
 }
 
-#search-input:focus {
+.search-field:focus {
   box-shadow: inset 0px 0px 0px 0px white;
 }
 
-#search-input::placeholder {
+.search-field::placeholder {
   color: $dark-blue;
   font-size: 20px;
   text-align: right;
   text-shadow: none;
 }
 
-#search-input:focus::placeholder {
+.search-field:focus::placeholder {
   font-size: 0px;
   transition: $slow-ease-in;
 }
@@ -387,7 +387,7 @@ main {
   width: 70%;
   z-index: 1000;
 
-  #exit-recipe-btn {
+  .exit-recipe-button {
     background: white;
     border: 2px double $green;
     border-radius: 5px;
@@ -405,7 +405,7 @@ main {
     }
   }
 
-  #recipe-title {
+  .recipe-header {
     background-repeat: no-repeat;
     background-size: cover;
     border-radius: 7px 7px 0px 0px;
@@ -431,7 +431,7 @@ main {
   }
 }
 
-#overlay {
+.page-overlay {
   filter:alpha(opacity=50);
   background-color: $dark-blue;
   height:100%;
