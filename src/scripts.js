@@ -160,7 +160,7 @@ const hideUnselectedRecipes = (foundRecipes) => {
 
 // FAVORITE RECIPE FUNCTIONALITY
 // Event targeting not working with JQ for this function. Look into .on()
-function addToMyRecipes() { 
+function addToMyRecipes() {
   if (event.target.className === "card-apple-icon") {
     let cardId = parseInt(event.target.closest(".recipe-card").id)
     if (!user.favoriteRecipes.includes(cardId)) {
@@ -201,7 +201,7 @@ const showSavedRecipes = () => {
 
 // CREATE RECIPE INSTRUCTIONS
 const openRecipeInfo = (event) => {
-  // fullRecipeInfo.style.display = "inline"; // 
+  // fullRecipeInfo.style.display = "inline"; //
   $(".recipe-instructions").css('display', 'inline')
   let recipeId = event.path.find(e => e.id).id;
   // let recipe = recipeData.find(recipe => recipe.id === Number(recipeId));
@@ -220,9 +220,9 @@ const openRecipeInfo = (event) => {
       // generateRecipeTitle(recipe, generateIngredients(recipe));
       // addRecipeImage(recipe);
       // generateInstructions(recipe);
-    
+
     .catch(error => console.log(error.message))
-    
+
     $(".recipe-instructions").before("<section id='overlay'></div>")
     // fullRecipeInfo.insertAdjacentHTML("beforebegin", "<section id='overlay'></div>");
 }
@@ -264,7 +264,7 @@ const generateIngredients = (recipe) => {
   }).join(", ");
 }
 
-function generateInstructions(recipe) {
+const generateInstructions = (recipe) => {
   let instructionsList = "";
   let instructions = recipe.instructions.map(i => {
     return i.instruction
@@ -272,15 +272,21 @@ function generateInstructions(recipe) {
   instructions.forEach(i => {
     instructionsList += `<li>${i}</li>`
   });
-  fullRecipeInfo.insertAdjacentHTML("beforeend", "<h4>Instructions</h4>");
-  fullRecipeInfo.insertAdjacentHTML("beforeend", `<ol>${instructionsList}</ol>`);
+  // fullRecipeInfo.insertAdjacentHTML("beforeend", "<h4>Instructions</h4>");
+  $(".recipe-instructions").append("<h4>Instructions</h4>");
+  // fullRecipeInfo.insertAdjacentHTML("beforeend", `<ol>${instructionsList}</ol>`);
+  $(".recipe-instructions").append(`<ol>${instructionsList}</ol>`);
 }
 
-function exitRecipe() {
-  while (fullRecipeInfo.firstChild &&
-    fullRecipeInfo.removeChild(fullRecipeInfo.firstChild));
-  fullRecipeInfo.style.display = "none";
-  document.getElementById("overlay").remove();
+const exitRecipe = () => {
+  // while (fullRecipeInfo.firstChild &&
+  //   fullRecipeInfo.removeChild(fullRecipeInfo.firstChild));
+  // fullRecipeInfo.style.display = "none";
+  // document.getElementById("overlay").remove();
+
+  while ($(".recipe-instructions:first-child") && $(".recipe-instructions").remove(".recipe-instructions:first-child"));
+  $(".recipe-instructions").hide();
+  $("#overlay").remove();
 }
 
 // TOGGLE DISPLAYS
