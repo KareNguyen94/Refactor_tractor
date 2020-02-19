@@ -1,5 +1,6 @@
 $main-font: "Quicksand", sans-serif;
 $dark-blue: #5B7894;
+$green: #359567;
 
 body {
   background-color: $dark-blue;
@@ -32,7 +33,7 @@ h2 {
 }
 
 h3 {
-  color: #359567;
+  color: $green;
   cursor: pointer;
   height: 17%;
   margin: 5px 5px 10px 0px;
@@ -40,7 +41,7 @@ h3 {
 }
 
 h4 {
-  color: #359567;
+  color: $green;
   background-color: #C4EB67;
   border-radius: 3px;
   margin: 10px 0px 0px 0px;
@@ -295,7 +296,7 @@ main {
 }
 
 .text {
-  background: #359567;
+  background: $green;
   color: white;
   font-weight: 700;
   font-size: 0px;
@@ -312,7 +313,7 @@ main {
 .show-pantry-recipes-btn,
 .show-all-btn,
 .filter-btn {
-  background-color: #359567;
+  background-color: $green;
   border: 0;
   border-radius: 3px;
   color: white;
@@ -355,7 +356,7 @@ main {
 }
 
 .drop-menu h2 {
-  color: #359567;
+  color: $green;
   margin: 0px;
 }
 
@@ -386,9 +387,9 @@ main {
 
 #exit-recipe-btn {
   background: white;
-  border: 2px double #359567;
+  border: 2px double $green;
   border-radius: 5px;
-  color: #359567;
+  color: $green;
   cursor: pointer;
   font-size: 20px;
   font-weight: 700;
@@ -416,7 +417,7 @@ main {
 
 .recipe-instructions h4 {
   background: white;
-  color: #359567;
+  color: $green;
 }
 
 .recipe-instructions p {
