@@ -61,7 +61,6 @@ const createRecipeHandler = (recipeData) => {
   recipeData.forEach(recipe => {
     let recipeInfo = new Recipe(recipe);
     let shortRecipeName = recipeInfo.name;
-    // console.log(recipeInfo)
     recipes.push(recipeInfo);
     if (recipeInfo.name.length > 40) {
       shortRecipeName = recipeInfo.name.substring(0, 40) + "...";
@@ -204,25 +203,14 @@ function showSavedRecipes() {
 function openRecipeInfo(event) {
   fullRecipeInfo.style.display = "inline";
   let recipeId = event.path.find(e => e.id).id;
-  // let recipe = recipeData.find(recipe => recipe.id === Number(recipeId));
   fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/recipes/recipeData')
     .then(response => response.json())
     .then(data => {
       let recipe = data.recipeData.find(recipe => recipe.id === Number(recipeId))
       fetchRecipe(recipe)
-      // console.log('recipe inside then', recipe)
     })
-
-
-      // let currentRecipe = new Recipe(recipe)
-      // console.log(currentRecipe)
-      // console.log(recipe)
-      // generateRecipeTitle(recipe, generateIngredients(recipe));
-      // addRecipeImage(recipe);
-      // generateInstructions(recipe);
-    
     .catch(error => console.log(error.message))
-    
+
     fullRecipeInfo.insertAdjacentHTML("beforebegin", "<section id='overlay'></div>");
 }
 
@@ -255,7 +243,6 @@ function addRecipeImage(recipe) {
 }
 
 function generateIngredients(recipe) {
-  console.log(recipe)
   return recipe && recipe.ingredients.map(i => {
     return `${i.name} (${i.quantity.amount} ${i.quantity.unit})`
     // add method of capitalize back in when we figure out ingredients
