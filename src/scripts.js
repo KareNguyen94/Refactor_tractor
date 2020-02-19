@@ -28,11 +28,14 @@ let user;
 
 allRecipesBtn.addEventListener("click", showAllRecipes);
 pantryBtn.addEventListener("click", toggleMenu);
-savedRecipesBtn.addEventListener("click", showSavedRecipes);
+// savedRecipesBtn.addEventListener("click", showSavedRecipes);
+
 searchBtn.addEventListener("click", searchRecipes);
 showPantryRecipes.addEventListener("click", findCheckedPantryBoxes);
 searchForm.addEventListener("submit", pressEnterSearch);
 main.addEventListener("click", addToMyRecipes);
+
+
 const receiveUserData = (dataSet, type, dataFunction) => {
   fetch(`https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/${type}/${dataSet}`)
   .then(response => response.json())
@@ -185,20 +188,21 @@ const isDescendant = (parent, child) => {
   return false;
 }
 
-function showSavedRecipes() {
+const showSavedRecipes = () => {
   let unsavedRecipes = recipes.filter(recipe => {
     return !user.favoriteRecipes.includes(recipe.id);
   });
   unsavedRecipes.forEach(recipe => {
-    let domRecipe = document.getElementById(`${recipe.id}`);
-    domRecipe.style.display = "none";
+    $(`#${recipe.id}`).hide()
+    // domRecipe.style.display = "none";
   });
   showMyRecipesBanner();
 }
 
 // CREATE RECIPE INSTRUCTIONS
-function openRecipeInfo(event) {
-  fullRecipeInfo.style.display = "inline";
+const openRecipeInfo = (event) => {
+  // fullRecipeInfo.style.display = "inline"; // 
+  $(".recipe-instructions").css('display', 'inline')
   let recipeId = event.path.find(e => e.id).id;
   // let recipe = recipeData.find(recipe => recipe.id === Number(recipeId));
   fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/recipes/recipeData')
@@ -219,10 +223,11 @@ function openRecipeInfo(event) {
     
     .catch(error => console.log(error.message))
     
-    fullRecipeInfo.insertAdjacentHTML("beforebegin", "<section id='overlay'></div>");
+    $(".recipe-instructions").before("<section id='overlay'></div>")
+    // fullRecipeInfo.insertAdjacentHTML("beforebegin", "<section id='overlay'></div>");
 }
 
-function fetchRecipe(recipe) {
+const fetchRecipe = (recipe) => {
   fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/ingredients/ingredientsData')
     .then(response => response.json())
     .then(data => {
@@ -237,17 +242,19 @@ function fetchRecipe(recipe) {
     .catch(error => console.log(error.message))
 }
 
-function generateRecipeTitle(recipe, ingredients) {
+const generateRecipeTitle = (recipe, ingredients) => {
   let recipeTitle = `
     <button id="exit-recipe-btn">X</button>
     <h3 id="recipe-title">${recipe.name}</h3>
     <h4>Ingredients</h4>
     <p>${ingredients}</p>`
-  fullRecipeInfo.insertAdjacentHTML("beforeend", recipeTitle);
+  // fullRecipeInfo.insertAdjacentHTML("beforeend", recipeTitle);
+  $(".recipe-instructions").append(recipeTitle)
 }
 
-function addRecipeImage(recipe) {
-  document.getElementById("recipe-title").style.backgroundImage = `url(${recipe.image})`;
+const addRecipeImage = (recipe) => {
+  // document.getElementById("recipe-title").style.backgroundImage = `url(${recipe.image})`;
+$("#recipe-title").css('background-image', `url(${recipe.image})`)
 }
 
 function generateIngredients(recipe) {
@@ -407,6 +414,7 @@ function findRecipesWithCheckedIngredients(selected) {
 }
 
 $(".filter-btn").click(findCheckedBoxes);
+$(".saved-recipes-btn").click(showSavedRecipes)
 // $('main').on('click', addToMyRecipes)
 receiveUserData('wcUsersData', 'users', getUserData);
 receiveUserData('recipeData', 'recipes', getRecipeData);
