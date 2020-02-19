@@ -353,28 +353,22 @@ main {
   text-align: center;
   width: 250px;
   z-index: 3;
-}
 
-.drop-menu h2 {
-  color: $green;
-  margin: 0px;
-}
+  h2 {
+    color: $green;
+    margin: 0px;
+  }
 
-.pantry-list {
-  color: #000000;
-  padding-left: 15px;
-  text-align: left;
-}
-
-ul {
-  list-style-type: none;
-  text-align: left;
-  padding-left: 35px;
-  li {
-    margin: 2px;
+  .pantry-list {
+    color: #000000;
+    padding-left: 15px;
+    text-align: left;
+    list-style-type: none;
+    li {
+      margin: 2px;
+    }
   }
 }
-
 
 /* RECIPE INSTRUCTIONS */
 .recipe-instructions {
@@ -392,49 +386,49 @@ ul {
   top: 15%;
   width: 70%;
   z-index: 1000;
-}
 
-#exit-recipe-btn {
-  background: white;
-  border: 2px double $green;
-  border-radius: 5px;
-  color: $green;
-  cursor: pointer;
-  font-size: 20px;
-  font-weight: 700;
-  margin: -4% -3% 2% -1%;
-  position: fixed;
-  transition: .3s ease;
-}
+  #exit-recipe-btn {
+    background: white;
+    border: 2px double $green;
+    border-radius: 5px;
+    color: $green;
+    cursor: pointer;
+    font-size: 20px;
+    font-weight: 700;
+    margin: -4% -3% 2% -1%;
+    position: fixed;
+    transition: .3s ease;
 
-#exit-recipe-btn:hover {
-  background: $light-green;
-  transition: .3s ease;
-}
+    &:hover {
+      background: $light-green;
+      transition: .3s ease;
+    }
+  }
 
-#recipe-title {
-  background-repeat: no-repeat;
-  background-size: cover;
-  border-radius: 7px 7px 0px 0px;
-  color: white;
-  font-size: 30px;
-  margin: 0;
-  padding: 5%;
-  text-align: center;
-  text-shadow: 0px 0px 6px black;
-}
+  #recipe-title {
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 7px 7px 0px 0px;
+    color: white;
+    font-size: 30px;
+    margin: 0;
+    padding: 5%;
+    text-align: center;
+    text-shadow: 0px 0px 6px black;
+  }
 
-.recipe-instructions h4 {
-  background: white;
-  color: $green;
-}
+  h4 {
+    background: white;
+    color: $green;
+  }
 
-.recipe-instructions p {
-  margin-left: 2%;
-}
+  p {
+    margin-left: 2%;
+  }
 
-.recipe-instructions ol {
-  margin-right: 2%;
+  ol {
+    margin-right: 2%;
+  }
 }
 
 #overlay {
