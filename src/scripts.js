@@ -279,25 +279,29 @@ const generateInstructions = (recipe) => {
 }
 
 const exitRecipe = () => {
-  // while (fullRecipeInfo.firstChild &&
-  //   fullRecipeInfo.removeChild(fullRecipeInfo.firstChild));
-  // fullRecipeInfo.style.display = "none";
-  // document.getElementById("overlay").remove();
+  while (fullRecipeInfo.firstChild &&
+    fullRecipeInfo.removeChild(fullRecipeInfo.firstChild));
+  fullRecipeInfo.style.display = "none";
+  document.getElementById("overlay").remove();
 
-  while ($(".recipe-instructions:first-child") && $(".recipe-instructions").remove(".recipe-instructions:first-child"));
-  $(".recipe-instructions").hide();
-  $("#overlay").remove();
+  // while ($(".recipe-instructions:first-child") && $(".recipe-instructions").remove(".recipe-instructions:first-child"));
+  // $(".recipe-instructions").hide();
+  // $("#overlay").remove();
 }
 
 // TOGGLE DISPLAYS
-function showMyRecipesBanner() {
+const showMyRecipesBanner = () => {
   document.querySelector(".welcome-msg").style.display = "none";
   document.querySelector(".my-recipes-banner").style.display = "block";
+  //   $(".welcome-msg").css('display', 'none');
+  //   $(".my-recipes-banner").css('display', 'block');
 }
 
-function showWelcomeBanner() {
-  document.querySelector(".welcome-msg").style.display = "flex";
-  document.querySelector(".my-recipes-banner").style.display = "none";
+const showWelcomeBanner = () => {
+  // document.querySelector(".welcome-msg").style.display = "flex";
+  // document.querySelector(".my-recipes-banner").style.display = "none";
+  $(".welcome-msg").css('display', "flex");
+  $(".my-recipes-banner").css('display', "none");
 }
 
 // SEARCH RECIPES
