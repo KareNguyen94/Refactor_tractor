@@ -223,6 +223,7 @@ const openRecipeInfo = (event) => {
 
     .catch(error => console.log(error.message))
 
+    $(".recipe-instructions").append("<div id='inner-instructions'></div>")
     $(".recipe-instructions").before("<section id='overlay'></div>")
     // fullRecipeInfo.insertAdjacentHTML("beforebegin", "<section id='overlay'></div>");
 }
@@ -249,7 +250,7 @@ const generateRecipeTitle = (recipe, ingredients) => {
     <h4>Ingredients</h4>
     <p>${ingredients}</p>`
   // fullRecipeInfo.insertAdjacentHTML("beforeend", recipeTitle);
-  $(".recipe-instructions").append(recipeTitle)
+  $("#inner-instructions").append(recipeTitle)
 }
 
 const addRecipeImage = (recipe) => {
@@ -273,37 +274,38 @@ const generateInstructions = (recipe) => {
     instructionsList += `<li>${i}</li>`
   });
   // fullRecipeInfo.insertAdjacentHTML("beforeend", "<h4>Instructions</h4>");
-  $(".recipe-instructions").append("<h4>Instructions</h4>");
+  $("#inner-instructions").append("<h4>Instructions</h4>");
   // fullRecipeInfo.insertAdjacentHTML("beforeend", `<ol>${instructionsList}</ol>`);
-  $(".recipe-instructions").append(`<ol>${instructionsList}</ol>`);
+  $("#inner-instructions").append(`<ol>${instructionsList}</ol>`);
 }
 
 const exitRecipe = () => {
-  while (fullRecipeInfo.firstChild &&
-    fullRecipeInfo.removeChild(fullRecipeInfo.firstChild));
-  fullRecipeInfo.style.display = "none";
-  document.getElementById("overlay").remove();
-
-  // $(".recipe-instructions:first-child") && $(".recipe-instructions").remove(".recipe-instructions:first-child");
-  // $(".recipe-instructions").hide();
-  // $("#overlay").remove();
+  if ($("#inner-instructions")) {
+    $("#inner-instructions").remove()
+  } 
+  $(".recipe-instructions").hide();
+  $("#overlay").remove();
 }
 
 // TOGGLE DISPLAYS
 
 // NOT WORKING/
+// check html
 const showMyRecipesBanner = () => {
-  document.querySelector(".welcome-msg").style.display = "none";
-  document.querySelector(".my-recipes-banner").style.display = "block";
-  //   $(".welcome-msg").css('display', 'none');
-  //   $(".my-recipes-banner").css('display', 'block');
+  // document.querySelector(".welcome-msg").style.display = "none";
+  // document.querySelector(".my-recipes-banner").style.display = "block";
+    $(".welcome-msg").hide()
+    // $(".my-recipes-banner").show();
+    $('.my-recipes-banner').show()
 }
+
+
 
 const showWelcomeBanner = () => {
   // document.querySelector(".welcome-msg").style.display = "flex";
   // document.querySelector(".my-recipes-banner").style.display = "none";
   $(".welcome-msg").css('display', "flex");
-  $(".my-recipes-banner").css('display', "none");
+  $(".my-recipes-banner").hide()
 }
 
 // SEARCH RECIPES
@@ -359,7 +361,7 @@ const showAllRecipes = () => {
 }
 
 // CREATE AND USE PANTRY
-function findPantryInfo(ingredientsData) {
+const findPantryInfo = (ingredientsData) => {
   user.pantry.forEach(item => {
     let itemInfo = ingredientsData.find(ingredient => {
       return ingredient.id === item.ingredient;
@@ -379,7 +381,7 @@ function findPantryInfo(ingredientsData) {
 }
 
 
-function displayPantryInfo(pantry) {
+const displayPantryInfo = (pantry) => {
   pantry.forEach(ingredient => {
     let ingredientHtml = `<li><input type="checkbox" class="pantry-checkbox" id="${ingredient.name}">
       <label for="${ingredient.name}">${ingredient.name}, ${ingredient.count}</label></li>`;
