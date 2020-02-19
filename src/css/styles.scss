@@ -366,6 +366,15 @@ main {
   text-align: left;
 }
 
+ul {
+  list-style-type: none;
+  text-align: left;
+  padding-left: 35px;
+  li {
+    margin: 2px;
+  }
+}
+
 
 /* RECIPE INSTRUCTIONS */
 .recipe-instructions {
