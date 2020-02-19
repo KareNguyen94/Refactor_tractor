@@ -1,6 +1,8 @@
 $main-font: "Quicksand", sans-serif;
 $dark-blue: #5B7894;
 $green: #359567;
+$light-green: #C4EB67;
+$slow-ease-in: .8s ease;
 
 body {
   background-color: $dark-blue;
@@ -37,12 +39,12 @@ h3 {
   cursor: pointer;
   height: 17%;
   margin: 5px 5px 10px 0px;
-  transition: .8s ease;
+  transition: $slow-ease-in;
 }
 
 h4 {
   color: $green;
-  background-color: #C4EB67;
+  background-color: $light-green;
   border-radius: 3px;
   margin: 10px 0px 0px 0px;
   padding: 1px 4px 1px 4px;
@@ -60,7 +62,7 @@ header {
 }
 
 span {
-  color: #C4EB67;
+  color: $light-green;
   font-weight: 400;
 }
 
@@ -72,7 +74,7 @@ span {
 
 #search {
   border-radius: 15px 15px 15px 15px;
-  border: 3px outset #C4EB67;
+  border: 3px outset $light-green;
   box-shadow: 0px 0px 7px 0px #475d74;
   display: flex;
   flex-direction: row;
@@ -95,13 +97,13 @@ span {
   outline: none;
   padding: 0% 2% 0% 0%;
   text-align: right;
-  transition: .8s ease;
+  transition: $slow-ease-in;
   width: 100%;
 }
 
 #search-input:hover {
   box-shadow: inset 0px 0px 0px 0px white;
-  transition: .8s ease;
+  transition: $slow-ease-in;
 }
 
 #search-input:focus {
@@ -117,7 +119,7 @@ span {
 
 #search-input:focus::placeholder {
   font-size: 0px;
-  transition: .8s ease;
+  transition: $slow-ease-in;
 }
 
 .search-label {
@@ -125,7 +127,7 @@ span {
 }
 
 .search-btn {
-  border-left: 3px outset #C4EB67;
+  border-left: 3px outset $light-green;
   border-radius: 0px 15px 15px 0px;
   padding: 1%;
 }
@@ -149,7 +151,7 @@ span {
 }
 
 .nav-btn:hover {
-  color: #C4EB67;
+  color: $light-green;
   font-size: 14px;
   text-shadow: 0px 2px 4px black;
   transition: .4s ease;
@@ -162,7 +164,7 @@ span {
 }
 
 .saved-ingredients-btn {
-  border-left: 3px solid #C4EB67;
+  border-left: 3px solid $light-green;
 }
 
 .ing-pan-btn {
@@ -242,7 +244,7 @@ main {
 
 .recipe-card {
   background-color: white;
-  border: 2px solid #C4EB67;
+  border: 2px solid $light-green;
   border-radius: 7px;
   cursor: pointer;
   height: 270px;
@@ -253,7 +255,7 @@ main {
 
 .recipe-card:hover .card-photo-preview {
   opacity: 50%;
-  transition: .8s ease;
+  transition: $slow-ease-in;
 }
 
 .recipe-card:hover .text {
@@ -264,8 +266,8 @@ main {
 }
 
 .recipe-card:hover h3 {
-  text-shadow: 0px 0px 4px #C4EB67;
-  transition: .8s ease;
+  text-shadow: 0px 0px 4px $light-green;
+  transition: $slow-ease-in;
 }
 
 .card-apple-icon {
@@ -283,7 +285,7 @@ main {
   border-radius: 7px;
   cursor: pointer;
   height: 130px;
-  transition: .8s ease;
+  transition: $slow-ease-in;
   width: 100%;
 }
 
@@ -370,7 +372,7 @@ main {
 /* RECIPE INSTRUCTIONS */
 .recipe-instructions {
   background: white;
-  border: 3px solid #C4EB67;
+  border: 3px solid $light-green;
   border-radius: 10px;
   box-shadow: 1px 1px 115px black;
   display: none;
@@ -399,7 +401,7 @@ main {
 }
 
 #exit-recipe-btn:hover {
-  background: #C4EB67;
+  background: $light-green;
   transition: .3s ease;
 }
 
