@@ -257,8 +257,7 @@ const addRecipeImage = (recipe) => {
 $("#recipe-title").css('background-image', `url(${recipe.image})`)
 }
 
-function generateIngredients(recipe) {
-  console.log(recipe)
+const generateIngredients = (recipe) => {
   return recipe && recipe.ingredients.map(i => {
     return `${i.name} (${i.quantity.amount} ${i.quantity.unit})`
     // add method of capitalize back in when we figure out ingredients
