@@ -1,7 +1,8 @@
 $main-font: "Quicksand", sans-serif;
+$dark-blue: #5B7894;
 
 body {
-  background-color: #5B7894;
+  background-color: $dark-blue;
   display: grid;
   font-family: $main-font;
   grid-template-columns: 1fr 5fr;
@@ -86,7 +87,7 @@ span {
   border-radius: 10px 0px 0px 10px;
   border: none;
   box-shadow: inset -3px -1px 20px 1px #5c7894;
-  color: #5B7894;
+  color: $dark-blue;
   font-family: $main-font;
   font-size: 42px;
   height: 100%;
@@ -107,7 +108,7 @@ span {
 }
 
 #search-input::placeholder {
-  color: #5B7894;
+  color: $dark-blue;
   font-size: 20px;
   text-align: right;
   text-shadow: none;
@@ -130,7 +131,7 @@ span {
 
 .nav-btn {
   align-items: center;
-  background: #5B7894 no-repeat;
+  background: $dark-blue no-repeat;
   border: none;
   cursor: pointer;
   display: flex;
@@ -428,7 +429,7 @@ main {
 
 #overlay {
   filter:alpha(opacity=50);
-  background-color: #5B7894;
+  background-color: $dark-blue;
   height:100%;
   left:0;
   opacity:0.5;
