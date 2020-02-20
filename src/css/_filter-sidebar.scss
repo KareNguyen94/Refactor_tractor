@@ -1,0 +1,30 @@
+/* FILTER SIDEBAR */
+
+$main-font: "Quicksand", sans-serif;
+$dark-blue: #5B7894;
+$green: #359567;
+$light-green: #C4EB67;
+$slow-ease-in: .8s ease;
+
+aside {
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  height: auto;
+  text-align: center;
+  .wrap {
+    background-color: white;
+    height: 100vh;
+    padding: 10px;
+    position: relative;
+    width: 200px;
+    ul {
+      list-style-type: none;
+      text-align: left;
+      padding-left: 35px;
+      li {
+        margin: 2px;
+      }
+    }
+  }
+}
