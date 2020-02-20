@@ -37,10 +37,13 @@ let domUpdates = {
     return words.split(" ").map(word => {
       return word.charAt(0).toUpperCase() + word.slice(1);
     }).join(" ");
-  }
+  },
 
 
-
+  showMyRecipesBanner() {
+    $(".welcome-msg").hide()
+    $('.my-recipes-banner').show()
+  },
 
 
 
