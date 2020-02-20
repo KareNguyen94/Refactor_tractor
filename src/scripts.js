@@ -12,7 +12,7 @@ import User from './user';
 import Recipe from './recipe';
 
 // let allRecipesBtn = document.querySelector(".show-all-btn");
-let fullRecipeInfo = document.querySelector(".recipe-instructions");
+// let fullRecipeInfo = document.querySelector(".recipe-instructions");
 let main = document.querySelector("main"); // for some reason we cant target this with jQuery without the variable declaration.
 let menuOpen = false;
 // let pantryBtn = document.querySelector(".my-pantry-btn");
@@ -22,7 +22,7 @@ let recipes = [];
 // let searchBtn = document.querySelector(".search-btn");
 // let searchForm = document.querySelector("#search");
 let searchInput = document.querySelector("#search-input");
-let showPantryRecipes = document.querySelector(".show-pantry-recipes-btn");
+// let showPantryRecipes = document.querySelector(".show-pantry-recipes-btn");
 let tagList = document.querySelector(".tag-list");
 let user;
 
@@ -31,7 +31,7 @@ let user;
 // savedRecipesBtn.addEventListener("click", showSavedRecipes);
 
 // searchBtn.addEventListener("click", searchRecipes);
-showPantryRecipes.addEventListener("click", findCheckedPantryBoxes);
+// showPantryRecipes.addEventListener("click", findCheckedPantryBoxes);
 // searchForm.addEventListener("submit", pressEnterSearch);
 main.addEventListener("click", addToMyRecipes);
 
@@ -385,12 +385,13 @@ const displayPantryInfo = (pantry) => {
   pantry.forEach(ingredient => {
     let ingredientHtml = `<li><input type="checkbox" class="pantry-checkbox" id="${ingredient.name}">
       <label for="${ingredient.name}">${ingredient.name}, ${ingredient.count}</label></li>`;
-    document.querySelector(".pantry-list").insertAdjacentHTML("beforeend",
-      ingredientHtml);
+    // document.querySelector(".pantry-list").insertAdjacentHTML("beforeend",
+    //   ingredientHtml);
+    $(".pantry-list").append(ingredientHtml);
   });
 }
 
-function getIngredientData() {
+const getIngredientData = () => {
   fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/ingredients/ingredientsData')
   .then(response => response.json())
   .then(data => {
@@ -399,8 +400,8 @@ function getIngredientData() {
   .catch(error => console.log(error.message))
 }
 
-function findCheckedPantryBoxes() {
-  let pantryCheckboxes = document.querySelectorAll(".pantry-checkbox");
+const findCheckedPantryBoxes = () => {
+  let pantryCheckboxes = $(".pantry-checkbox");
   let pantryCheckboxInfo = Array.from(pantryCheckboxes)
   let selectedIngredients = pantryCheckboxInfo.filter(box => {
     return box.checked;
@@ -428,6 +429,7 @@ function findRecipesWithCheckedIngredients(selected) {
   })
 }
 // allRecipesBtn.addEventListener("click", showAllRecipes);
+$('.show-pantry-recipes-btn').click(findCheckedPantryBoxes)
 $('.show-all-btn').click(showAllRecipes)
 $('.my-pantry-btn').click(toggleMenu);
 $('.search-btn').click(searchRecipes);
