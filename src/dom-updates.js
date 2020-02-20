@@ -39,11 +39,23 @@ let domUpdates = {
     }).join(" ");
   },
 
-
-  showMyRecipesBanner() {
-    $(".welcome-msg").hide()
-    $('.my-recipes-banner').show()
+  showOrHideBanner(welcome, recipe) {
+    $(`${welcome}`).show()
+    $(`${recipe}`).hide()
   },
+  
+  // showMyRecipesBanner() {
+  //   $(".welcome-msg").hide()
+  //   $('.my-recipes-banner').show()
+  // },
+
+
+  // showWelcomeBanner() {
+  //   // $(".welcome-msg").css('display', "flex");
+  //   $(".welcome-msg").show();
+  //   $(".my-recipes-banner").hide()
+  // },
+
 
 
 
