@@ -11,30 +11,12 @@ import './images/seasoning.png'
 import User from './user';
 import Recipe from './recipe';
 
-// let allRecipesBtn = document.querySelector(".show-all-btn");
-// let fullRecipeInfo = document.querySelector(".recipe-instructions");
-let main = document.querySelector("main"); // for some reason we cant target this with jQuery without the variable declaration.
 let menuOpen = false;
-// let pantryBtn = document.querySelector(".my-pantry-btn");
 let pantryInfo = [];
 let recipes = [];
-// let savedRecipesBtn = document.querySelector(".saved-recipes-btn");
-// let searchBtn = document.querySelector(".search-btn");
-// let searchForm = document.querySelector("#search");
 let searchInput = document.querySelector("#search-input");
-// let showPantryRecipes = document.querySelector(".show-pantry-recipes-btn");
 let tagList = document.querySelector(".tag-list");
 let user;
-
-// allRecipesBtn.addEventListener("click", showAllRecipes);
-// pantryBtn.addEventListener("click", toggleMenu);
-// savedRecipesBtn.addEventListener("click", showSavedRecipes);
-
-// searchBtn.addEventListener("click", searchRecipes);
-// showPantryRecipes.addEventListener("click", findCheckedPantryBoxes);
-// searchForm.addEventListener("submit", pressEnterSearch);
-main.addEventListener("click", addToMyRecipes);
-
 
 const receiveUserData = (dataSet, type, dataFunction) => {
   fetch(`https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/${type}/${dataSet}`)
@@ -86,7 +68,7 @@ const addToDom = (recipeInfo, shortRecipeName) => {
       <h4>${recipeInfo.tags[0]}</h4>
       <img src="../images/apple-logo-outline.png" alt="unfilled apple icon" class="card-apple-icon">
     </div>`
-  $(main).append(cardHtml);
+  $('main').append(cardHtml);
 }
 
 // FILTER BY RECIPE TAGS
@@ -117,7 +99,6 @@ const capitalize = (words) => {
   }).join(" ");
 }
 
-// not working in es6
 const findCheckedBoxes = () => {
   let tagCheckboxes = $(".checked-tag");
   let checkboxInfo = Array.from(tagCheckboxes)
@@ -159,7 +140,6 @@ const hideUnselectedRecipes = (foundRecipes) => {
 }
 
 // FAVORITE RECIPE FUNCTIONALITY
-// Event targeting not working with JQ for this function. Look into .on()
 function addToMyRecipes() {
   if (event.target.className === "card-apple-icon") {
     let cardId = parseInt(event.target.closest(".recipe-card").id)
@@ -194,38 +174,24 @@ const showSavedRecipes = () => {
   });
   unsavedRecipes.forEach(recipe => {
     $(`#${recipe.id}`).hide()
-    // domRecipe.style.display = "none";
   });
   showMyRecipesBanner();
 }
 
 // CREATE RECIPE INSTRUCTIONS
 const openRecipeInfo = (event) => {
-  // fullRecipeInfo.style.display = "inline"; //
   $(".recipe-instructions").css('display', 'inline')
   let recipeId = event.path.find(e => e.id).id;
-  // let recipe = recipeData.find(recipe => recipe.id === Number(recipeId));
   fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/recipes/recipeData')
     .then(response => response.json())
     .then(data => {
       let recipe = data.recipeData.find(recipe => recipe.id === Number(recipeId))
       fetchRecipe(recipe)
-      // console.log('recipe inside then', recipe)
     })
-
-
-      // let currentRecipe = new Recipe(recipe)
-      // console.log(currentRecipe)
-      // console.log(recipe)
-      // generateRecipeTitle(recipe, generateIngredients(recipe));
-      // addRecipeImage(recipe);
-      // generateInstructions(recipe);
-
     .catch(error => console.log(error.message))
 
     $(".recipe-instructions").append("<div id='inner-instructions'></div>")
     $(".recipe-instructions").before("<section id='overlay'></div>")
-    // fullRecipeInfo.insertAdjacentHTML("beforebegin", "<section id='overlay'></div>");
 }
 
 const fetchRecipe = (recipe) => {
@@ -249,12 +215,10 @@ const generateRecipeTitle = (recipe, ingredients) => {
     <h3 id="recipe-title">${recipe.name}</h3>
     <h4>Ingredients</h4>
     <p>${ingredients}</p>`
-  // fullRecipeInfo.insertAdjacentHTML("beforeend", recipeTitle);
   $("#inner-instructions").append(recipeTitle)
 }
 
 const addRecipeImage = (recipe) => {
-  // document.getElementById("recipe-title").style.backgroundImage = `url(${recipe.image})`;
 $("#recipe-title").css('background-image', `url(${recipe.image})`)
 }
 
@@ -273,9 +237,7 @@ const generateInstructions = (recipe) => {
   instructions.forEach(i => {
     instructionsList += `<li>${i}</li>`
   });
-  // fullRecipeInfo.insertAdjacentHTML("beforeend", "<h4>Instructions</h4>");
   $("#inner-instructions").append("<h4>Instructions</h4>");
-  // fullRecipeInfo.insertAdjacentHTML("beforeend", `<ol>${instructionsList}</ol>`);
   $("#inner-instructions").append(`<ol>${instructionsList}</ol>`);
 }
 
@@ -288,22 +250,14 @@ const exitRecipe = () => {
 }
 
 // TOGGLE DISPLAYS
-
-// NOT WORKING/
-// check html
 const showMyRecipesBanner = () => {
-  // document.querySelector(".welcome-msg").style.display = "none";
-  // document.querySelector(".my-recipes-banner").style.display = "block";
     $(".welcome-msg").hide()
-    // $(".my-recipes-banner").show();
     $('.my-recipes-banner').show()
 }
 
 
 
 const showWelcomeBanner = () => {
-  // document.querySelector(".welcome-msg").style.display = "flex";
-  // document.querySelector(".my-recipes-banner").style.display = "none";
   $(".welcome-msg").css('display', "flex");
   $(".my-recipes-banner").hide()
 }
@@ -320,7 +274,6 @@ const extractRecipes = (recipeData) => {
   });
   filterNonSearched(createRecipeObject(searchedRecipes));
 }
-
 
 const searchRecipes = () => {
   showAllRecipes();
@@ -341,20 +294,16 @@ const createRecipeObject = (recipes) => {
 }
 
 const toggleMenu = () => {
-  // var menuDropdown = document.querySelector(".drop-menu");
   menuOpen = !menuOpen;
   if (menuOpen) {
-    // menuDropdown.style.display = "block";
     $(".drop-menu").css('display', 'block')
   } else {
-    // menuDropdown.style.display = "none";
     $(".drop-menu").css('display', 'none')
   }
 }
 
 const showAllRecipes = () => {
   recipes.forEach(recipe => {
-    // let domRecipe = document.getElementById(`${recipe.id}`);
     $(`#${recipe.id}`).css('display', "block");
   });
   showWelcomeBanner();
@@ -385,8 +334,6 @@ const displayPantryInfo = (pantry) => {
   pantry.forEach(ingredient => {
     let ingredientHtml = `<li><input type="checkbox" class="pantry-checkbox" id="${ingredient.name}">
       <label for="${ingredient.name}">${ingredient.name}, ${ingredient.count}</label></li>`;
-    // document.querySelector(".pantry-list").insertAdjacentHTML("beforeend",
-    //   ingredientHtml);
     $(".pantry-list").append(ingredientHtml);
   });
 }
@@ -412,7 +359,8 @@ const findCheckedPantryBoxes = () => {
   }
 }
 
-function findRecipesWithCheckedIngredients(selected) {
+//FUNCTION DOES NOT WORK? WHATS MISSING?
+const findRecipesWithCheckedIngredients = (selected) => {
   let recipeChecker = (arr, target) => target.every(v => arr.includes(v));
   let ingredientNames = selected.map(item => {
     return item.id;
@@ -423,19 +371,19 @@ function findRecipesWithCheckedIngredients(selected) {
       allRecipeIngredients.push(ingredient.name);
     });
     if (!recipeChecker(allRecipeIngredients, ingredientNames)) {
-      let domRecipe = document.getElementById(`${recipe.id}`);
-      domRecipe.style.display = "none";
+      $(`#${recipe.id}`).hide();
     }
   })
 }
-// allRecipesBtn.addEventListener("click", showAllRecipes);
-$('.show-pantry-recipes-btn').click(findCheckedPantryBoxes)
-$('.show-all-btn').click(showAllRecipes)
+
+$('.show-pantry-recipes-btn').click(findCheckedPantryBoxes);
+$('.show-all-btn').click(showAllRecipes);
 $('.my-pantry-btn').click(toggleMenu);
 $('.search-btn').click(searchRecipes);
 $('#search').submit(pressEnterSearch);
 $(".filter-btn").click(findCheckedBoxes);
-$(".saved-recipes-btn").click(showSavedRecipes)
-// $('main').on('click', addToMyRecipes)
+$(".saved-recipes-btn").click(showSavedRecipes);
+$('main').click(addToMyRecipes);
+
 receiveUserData('wcUsersData', 'users', getUserData);
 receiveUserData('recipeData', 'recipes', getRecipeData);
