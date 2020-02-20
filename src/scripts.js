@@ -211,8 +211,8 @@ const fetchRecipe = (recipe) => {
 
 const generateRecipeTitle = (recipe, ingredients) => {
   let recipeTitle = `
-    <button id="exit-recipe-btn">X</button>
-    <h3 id="recipe-title">${recipe.name}</h3>
+    <button id="exit-recipe-btn" class="exit-recipe-button">X</button>
+    <h3 id="recipe-title" class="recipe-header">${recipe.name}</h3>
     <h4>Ingredients</h4>
     <p>${ingredients}</p>`
   $("#inner-instructions").append(recipeTitle)
@@ -244,7 +244,7 @@ const generateInstructions = (recipe) => {
 const exitRecipe = () => {
   if ($("#inner-instructions")) {
     $("#inner-instructions").remove()
-  } 
+  }
   $(".recipe-instructions").hide();
   $("#overlay").remove();
 }
