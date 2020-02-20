@@ -425,11 +425,11 @@ main {
 }
 
 #overlay {
-  filter:alpha(opacity=50);
+  // filter:alpha(opacity=10);
   background-color: #5B7894;
   height:100%;
   left:0;
-  opacity:0.5;
+  opacity:0.7;
   position:fixed;
   top:0;
   width:100%;
