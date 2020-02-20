@@ -1,4 +1,5 @@
 import $ from 'jquery';
+import domUpdates from './dom-updates.js'
 
 import './css/base.scss';
 import './css/styles.scss';
@@ -29,11 +30,12 @@ const receiveUserData = (dataSet, type, dataFunction) => {
 const getUserData = (data) => {
   user = new User(data[Math.floor(Math.random() * data.length)]);
   let firstName = user.name.split(" ")[0];
-  let welcomeMsg = `
-    <div class="welcome-msg">
-      <h1>Welcome ${firstName}!</h1>
-    </div>`;
-  $(".banner-image").prepend(welcomeMsg);
+  // let welcomeMsg = `
+  //   <div class="welcome-msg">
+  //     <h1>Welcome ${firstName}!</h1>
+  //   </div>`;
+  // $(".banner-image").prepend(welcomeMsg);
+domUpdates.welcomeMessage(firstName);
   getIngredientData();
 };
 
@@ -244,7 +246,7 @@ const generateInstructions = (recipe) => {
 const exitRecipe = () => {
   if ($("#inner-instructions")) {
     $("#inner-instructions").remove()
-  } 
+  }
   $(".recipe-instructions").hide();
   $("#overlay").remove();
 }
