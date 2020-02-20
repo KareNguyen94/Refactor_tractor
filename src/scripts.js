@@ -11,30 +11,12 @@ import './images/seasoning.png'
 import User from './user';
 import Recipe from './recipe';
 
-let allRecipesBtn = document.querySelector(".show-all-btn");
-let filterBtn = document.querySelector(".filter-btn");
-let fullRecipeInfo = document.querySelector(".recipe-instructions");
-let main = document.querySelector("main");
 let menuOpen = false;
-let pantryBtn = document.querySelector(".my-pantry-btn");
 let pantryInfo = [];
 let recipes = [];
-let savedRecipesBtn = document.querySelector(".saved-recipes-btn");
-let searchBtn = document.querySelector(".search-btn");
-let searchForm = document.querySelector("#search");
 let searchInput = document.querySelector("#search-input");
-let showPantryRecipes = document.querySelector(".show-pantry-recipes-btn");
 let tagList = document.querySelector(".tag-list");
 let user;
-
-allRecipesBtn.addEventListener("click", showAllRecipes);
-filterBtn.addEventListener("click", findCheckedBoxes);
-main.addEventListener("click", addToMyRecipes);
-pantryBtn.addEventListener("click", toggleMenu);
-savedRecipesBtn.addEventListener("click", showSavedRecipes);
-searchBtn.addEventListener("click", searchRecipes);
-showPantryRecipes.addEventListener("click", findCheckedPantryBoxes);
-searchForm.addEventListener("submit", pressEnterSearch);
 
 const receiveUserData = (dataSet, type, dataFunction) => {
   fetch(`https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/${type}/${dataSet}`)
@@ -51,8 +33,7 @@ const getUserData = (data) => {
     <div class="welcome-msg">
       <h1>Welcome ${firstName}!</h1>
     </div>`;
-  document.querySelector(".banner-image").insertAdjacentHTML("afterbegin",
-    welcomeMsg);
+  $(".banner-image").prepend(welcomeMsg);
   getIngredientData();
 };
 
@@ -74,7 +55,7 @@ const getRecipeData = (recipeData) => {
   findTags(recipeData);
 };
 
-function addToDom(recipeInfo, shortRecipeName) {
+const addToDom = (recipeInfo, shortRecipeName) => {
   let cardHtml = `
     <div class="recipe-card" id=${recipeInfo.id}>
       <h3 maxlength="40">${shortRecipeName}</h3>
@@ -87,11 +68,11 @@ function addToDom(recipeInfo, shortRecipeName) {
       <h4>${recipeInfo.tags[0]}</h4>
       <img src="../images/apple-logo-outline.png" alt="unfilled apple icon" class="card-apple-icon">
     </div>`
-  main.insertAdjacentHTML("beforeend", cardHtml);
+  $('main').append(cardHtml);
 }
 
 // FILTER BY RECIPE TAGS
-function findTags(recipeData) {
+const findTags = (recipeData) => {
   let tags = [];
   recipeData.forEach(recipe => {
     recipe.tags.forEach(tag => {
@@ -104,22 +85,22 @@ function findTags(recipeData) {
   listTags(tags);
 }
 
-function listTags(allTags) {
+const listTags = (allTags) => {
   allTags.forEach(tag => {
     let tagHtml = `<li><input type="checkbox" class="checked-tag" id="${tag}">
       <label for="${tag}">${capitalize(tag)}</label></li>`;
-    tagList.insertAdjacentHTML("beforeend", tagHtml);
+    $(tagList).append(tagHtml);
   });
 }
 
-function capitalize(words) {
+const capitalize = (words) => {
   return words.split(" ").map(word => {
     return word.charAt(0).toUpperCase() + word.slice(1);
   }).join(" ");
 }
 
-function findCheckedBoxes() {
-  let tagCheckboxes = document.querySelectorAll(".checked-tag");
+const findCheckedBoxes = () => {
+  let tagCheckboxes = $(".checked-tag");
   let checkboxInfo = Array.from(tagCheckboxes)
   let selectedTags = checkboxInfo.filter(box => {
     return box.checked;
@@ -127,7 +108,7 @@ function findCheckedBoxes() {
   findTaggedRecipes(selectedTags);
 }
 
-function findTaggedRecipes(selected) {
+const findTaggedRecipes = (selected) => {
   let filteredResults = [];
   selected.forEach(tag => {
     let allRecipes = recipes.filter(recipe => {
@@ -145,17 +126,16 @@ function findTaggedRecipes(selected) {
   }
 }
 
-function filterRecipes(filtered) {
+const filterRecipes = (filtered) => {
   let foundRecipes = recipes.filter(recipe => {
     return !filtered.includes(recipe);
   });
   hideUnselectedRecipes(foundRecipes)
 }
 
-function hideUnselectedRecipes(foundRecipes) {
+const hideUnselectedRecipes = (foundRecipes) => {
   foundRecipes.forEach(recipe => {
-    let domRecipe = document.getElementById(`${recipe.id}`);
-    domRecipe.style.display = "none";
+    $(`#${recipe.id}`).hide()
   });
 }
 
@@ -177,7 +157,7 @@ function addToMyRecipes() {
   }
 }
 
-function isDescendant(parent, child) {
+const isDescendant = (parent, child) => {
   let node = child;
   while (node !== null) {
     if (node === parent) {
@@ -188,20 +168,19 @@ function isDescendant(parent, child) {
   return false;
 }
 
-function showSavedRecipes() {
+const showSavedRecipes = () => {
   let unsavedRecipes = recipes.filter(recipe => {
     return !user.favoriteRecipes.includes(recipe.id);
   });
   unsavedRecipes.forEach(recipe => {
-    let domRecipe = document.getElementById(`${recipe.id}`);
-    domRecipe.style.display = "none";
+    $(`#${recipe.id}`).hide()
   });
   showMyRecipesBanner();
 }
 
 // CREATE RECIPE INSTRUCTIONS
-function openRecipeInfo(event) {
-  fullRecipeInfo.style.display = "inline";
+const openRecipeInfo = (event) => {
+  $(".recipe-instructions").css('display', 'inline')
   let recipeId = event.path.find(e => e.id).id;
   fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/recipes/recipeData')
     .then(response => response.json())
@@ -211,10 +190,11 @@ function openRecipeInfo(event) {
     })
     .catch(error => console.log(error.message))
 
-    fullRecipeInfo.insertAdjacentHTML("beforebegin", "<section id='overlay' class='page-overlay'></div>");
+    $(".recipe-instructions").append("<div id='inner-instructions'></div>")
+    $(".recipe-instructions").before("<section id='overlay'></div>")
 }
 
-function fetchRecipe(recipe) {
+const fetchRecipe = (recipe) => {
   fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/ingredients/ingredientsData')
     .then(response => response.json())
     .then(data => {
@@ -229,27 +209,27 @@ function fetchRecipe(recipe) {
     .catch(error => console.log(error.message))
 }
 
-function generateRecipeTitle(recipe, ingredients) {
+const generateRecipeTitle = (recipe, ingredients) => {
   let recipeTitle = `
     <button id="exit-recipe-btn" class="exit-recipe-button">X</button>
     <h3 id="recipe-title" class="recipe-header">${recipe.name}</h3>
     <h4>Ingredients</h4>
     <p>${ingredients}</p>`
-  fullRecipeInfo.insertAdjacentHTML("beforeend", recipeTitle);
+  $("#inner-instructions").append(recipeTitle)
 }
 
-function addRecipeImage(recipe) {
-  document.getElementById("recipe-title").style.backgroundImage = `url(${recipe.image})`;
+const addRecipeImage = (recipe) => {
+$("#recipe-title").css('background-image', `url(${recipe.image})`)
 }
 
-function generateIngredients(recipe) {
+const generateIngredients = (recipe) => {
   return recipe && recipe.ingredients.map(i => {
     return `${i.name} (${i.quantity.amount} ${i.quantity.unit})`
     // add method of capitalize back in when we figure out ingredients
   }).join(", ");
 }
 
-function generateInstructions(recipe) {
+const generateInstructions = (recipe) => {
   let instructionsList = "";
   let instructions = recipe.instructions.map(i => {
     return i.instruction
@@ -257,48 +237,50 @@ function generateInstructions(recipe) {
   instructions.forEach(i => {
     instructionsList += `<li>${i}</li>`
   });
-  fullRecipeInfo.insertAdjacentHTML("beforeend", "<h4>Instructions</h4>");
-  fullRecipeInfo.insertAdjacentHTML("beforeend", `<ol>${instructionsList}</ol>`);
+  $("#inner-instructions").append("<h4>Instructions</h4>");
+  $("#inner-instructions").append(`<ol>${instructionsList}</ol>`);
 }
 
-function exitRecipe() {
-  while (fullRecipeInfo.firstChild &&
-    fullRecipeInfo.removeChild(fullRecipeInfo.firstChild));
-  fullRecipeInfo.style.display = "none";
-  document.getElementById("overlay").remove();
+const exitRecipe = () => {
+  if ($("#inner-instructions")) {
+    $("#inner-instructions").remove()
+  }
+  $(".recipe-instructions").hide();
+  $("#overlay").remove();
 }
 
 // TOGGLE DISPLAYS
-function showMyRecipesBanner() {
-  document.querySelector(".welcome-msg").style.display = "none";
-  document.querySelector(".my-recipes-banner").style.display = "block";
+const showMyRecipesBanner = () => {
+    $(".welcome-msg").hide()
+    $('.my-recipes-banner').show()
 }
 
-function showWelcomeBanner() {
-  document.querySelector(".welcome-msg").style.display = "flex";
-  document.querySelector(".my-recipes-banner").style.display = "none";
+
+
+const showWelcomeBanner = () => {
+  $(".welcome-msg").css('display', "flex");
+  $(".my-recipes-banner").hide()
 }
 
 // SEARCH RECIPES
-function pressEnterSearch(event) {
+const pressEnterSearch = (event) => {
   event.preventDefault();
   searchRecipes();
 }
 
-function extractRecipes(recipeData) {
+const extractRecipes = (recipeData) => {
   let searchedRecipes = recipeData.filter(recipe => {
     return recipe.name.toLowerCase().includes(searchInput.value.toLowerCase());
   });
   filterNonSearched(createRecipeObject(searchedRecipes));
 }
 
-
-function searchRecipes() {
+const searchRecipes = () => {
   showAllRecipes();
   receiveUserData('recipeData', 'recipes', extractRecipes);
 }
 
-function filterNonSearched(filtered) {
+const filterNonSearched = (filtered) => {
   let found = recipes.filter(recipe => {
     let ids = filtered.map(f => f.id);
     return !ids.includes(recipe.id)
@@ -306,31 +288,29 @@ function filterNonSearched(filtered) {
   hideUnselectedRecipes(found);
 }
 
-function createRecipeObject(recipes) {
+const createRecipeObject = (recipes) => {
   recipes = recipes.map(recipe => new Recipe(recipe));
   return recipes
 }
 
-function toggleMenu() {
-  var menuDropdown = document.querySelector(".drop-menu");
+const toggleMenu = () => {
   menuOpen = !menuOpen;
   if (menuOpen) {
-    menuDropdown.style.display = "block";
+    $(".drop-menu").css('display', 'block')
   } else {
-    menuDropdown.style.display = "none";
+    $(".drop-menu").css('display', 'none')
   }
 }
 
-function showAllRecipes() {
+const showAllRecipes = () => {
   recipes.forEach(recipe => {
-    let domRecipe = document.getElementById(`${recipe.id}`);
-    domRecipe.style.display = "block";
+    $(`#${recipe.id}`).css('display', "block");
   });
   showWelcomeBanner();
 }
 
 // CREATE AND USE PANTRY
-function findPantryInfo(ingredientsData) {
+const findPantryInfo = (ingredientsData) => {
   user.pantry.forEach(item => {
     let itemInfo = ingredientsData.find(ingredient => {
       return ingredient.id === item.ingredient;
@@ -350,27 +330,25 @@ function findPantryInfo(ingredientsData) {
 }
 
 
-function displayPantryInfo(pantry) {
+const displayPantryInfo = (pantry) => {
   pantry.forEach(ingredient => {
     let ingredientHtml = `<li><input type="checkbox" class="pantry-checkbox" id="${ingredient.name}">
       <label for="${ingredient.name}">${ingredient.name}, ${ingredient.count}</label></li>`;
-    document.querySelector(".pantry-list").insertAdjacentHTML("beforeend",
-      ingredientHtml);
+    $(".pantry-list").append(ingredientHtml);
   });
 }
 
-function getIngredientData() {
+const getIngredientData = () => {
   fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/ingredients/ingredientsData')
   .then(response => response.json())
   .then(data => {
     findPantryInfo(data.ingredientsData)
   })
   .catch(error => console.log(error.message))
-
 }
 
-function findCheckedPantryBoxes() {
-  let pantryCheckboxes = document.querySelectorAll(".pantry-checkbox");
+const findCheckedPantryBoxes = () => {
+  let pantryCheckboxes = $(".pantry-checkbox");
   let pantryCheckboxInfo = Array.from(pantryCheckboxes)
   let selectedIngredients = pantryCheckboxInfo.filter(box => {
     return box.checked;
@@ -381,7 +359,8 @@ function findCheckedPantryBoxes() {
   }
 }
 
-function findRecipesWithCheckedIngredients(selected) {
+//FUNCTION DOES NOT WORK? WHATS MISSING?
+const findRecipesWithCheckedIngredients = (selected) => {
   let recipeChecker = (arr, target) => target.every(v => arr.includes(v));
   let ingredientNames = selected.map(item => {
     return item.id;
@@ -392,11 +371,19 @@ function findRecipesWithCheckedIngredients(selected) {
       allRecipeIngredients.push(ingredient.name);
     });
     if (!recipeChecker(allRecipeIngredients, ingredientNames)) {
-      let domRecipe = document.getElementById(`${recipe.id}`);
-      domRecipe.style.display = "none";
+      $(`#${recipe.id}`).hide();
     }
   })
 }
+
+$('.show-pantry-recipes-btn').click(findCheckedPantryBoxes);
+$('.show-all-btn').click(showAllRecipes);
+$('.my-pantry-btn').click(toggleMenu);
+$('.search-btn').click(searchRecipes);
+$('#search').submit(pressEnterSearch);
+$(".filter-btn").click(findCheckedBoxes);
+$(".saved-recipes-btn").click(showSavedRecipes);
+$('main').click(addToMyRecipes);
 
 receiveUserData('wcUsersData', 'users', getUserData);
 receiveUserData('recipeData', 'recipes', getRecipeData);
