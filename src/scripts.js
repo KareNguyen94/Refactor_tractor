@@ -5,7 +5,8 @@ import './css/styles.scss';
 import './images/apple-logo.png'
 import './images/apple-logo-outline.png'
 import './images/search.png'
-import './images/cookbook.png'
+import './images/cookbook.svg'
+import './images/cookbook2.svg'
 import './images/seasoning.png'
 
 import User from './user';
@@ -66,7 +67,7 @@ const addToDom = (recipeInfo, shortRecipeName) => {
         </div>
       </div>
       <h4>${recipeInfo.tags[0]}</h4>
-      <img src="../images/cookbook.png" alt="chef hat icon" class="chef-hat">
+      <img src="../images/cookbook.svg" alt="chef hat icon" class="chef-hat">
       <img src="../images/apple-logo-outline.png" alt="unfilled apple icon" class="card-apple-icon">
     </div>`
   $('main').append(cardHtml);
@@ -140,7 +141,16 @@ const hideUnselectedRecipes = (foundRecipes) => {
   });
 }
 
-// FAVORITE RECIPE FUNCTIONALITY
+// FAVORITE/TO COOK RECIPE FUNCTIONALITY
+
+function showInstructions() {
+  if(event.target.className === "card-photo-preview") {
+    openRecipeInfo(event);
+  } else if (event.target.id === "exit-recipe-btn") {
+    exitRecipe();
+  }
+}
+
 function addToMyRecipes() {
   if (event.target.className === "card-apple-icon") {
     let cardId = parseInt(event.target.closest(".recipe-card").id)
@@ -151,10 +161,19 @@ function addToMyRecipes() {
       event.target.src = "../images/apple-logo-outline.png";
       user.removeRecipe(cardId);
     }
-  } else if (event.target.id === "exit-recipe-btn") {
-    exitRecipe();
-  } else if (isDescendant(event.target.closest(".recipe-card"), event.target)) {
-    openRecipeInfo(event);
+  }
+}
+
+function addToCook() {
+  if (event.target.className === "chef-hat") {
+    let cardId = parseInt(event.target.closest(".recipe-card").id)
+    if (!user.recipesToCook.includes(cardId)) {
+      event.target.src = "../images/cookbook2.svg";
+      user.saveToCook(cardId);
+    } else {
+      event.target.src = "../images/cookbook.svg";
+      user.removeToCook(cardId);
+    }
   }
 }
 
@@ -383,8 +402,10 @@ $('.my-pantry-btn').click(toggleMenu);
 $('.search-btn').click(searchRecipes);
 $('#search').submit(pressEnterSearch);
 $(".filter-btn").click(findCheckedBoxes);
-$(".saved-recipes-btn").click(showSavedRecipes);
+$(".apple").click(showSavedRecipes);
 $('main').click(addToMyRecipes);
+$('main').click(addToCook);
+$('main').click(showInstructions)
 
 receiveUserData('wcUsersData', 'users', getUserData);
 receiveUserData('recipeData', 'recipes', getRecipeData);
