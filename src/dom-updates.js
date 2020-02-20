@@ -43,7 +43,15 @@ let domUpdates = {
     $(`${welcome}`).show()
     $(`${recipe}`).hide()
   },
-  
+
+
+  showRecipeInstuctions() {
+    $(".recipe-instructions").append("<div id='inner-instructions'></div>")
+  },
+
+  applyOverlay() {
+    $(".recipe-instructions").before("<section id='overlay'></div>")
+  }
   // showMyRecipesBanner() {
   //   $(".welcome-msg").hide()
   //   $('.my-recipes-banner').show()
