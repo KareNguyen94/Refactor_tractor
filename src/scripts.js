@@ -19,6 +19,7 @@ let searchInput = document.querySelector("#search-input");
 let tagList = document.querySelector(".tag-list");
 let user;
 
+
 const receiveUserData = (dataSet, type, dataFunction) => {
   fetch(`https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/${type}/${dataSet}`)
   .then(response => response.json())
@@ -86,27 +87,30 @@ const findTags = (recipeData) => {
     });
   });
   tags.sort();
-  listTags(tags);
-}
+  // listTags(tags); // will need to run domUpdates here
+  domUpdates.listTags(tags)
+};
 
-const listTags = (allTags) => {
-  allTags.forEach(tag => {
-    let tagHtml = `<li><input type="checkbox" class="checked-tag" id="${tag}">
-      <label for="${tag}">${capitalize(tag)}</label></li>`;
-    $(tagList).append(tagHtml);
-  });
-}
+// const listTags = (allTags) => {
+//   allTags.forEach(tag => {
+//     let tagHtml = `<li><input type="checkbox" class="checked-tag" id="${tag}">
+//       <label for="${tag}">${capitalize(tag)}</label></li>`;
+//     $(tagList).append(tagHtml);
+//   });
+// }
 
-const capitalize = (words) => {
-  return words.split(" ").map(word => {
-    return word.charAt(0).toUpperCase() + word.slice(1);
-  }).join(" ");
-}
+// const capitalize = (words) => {
+//   return words.split(" ").map(word => {
+//     return word.charAt(0).toUpperCase() + word.slice(1);
+//   }).join(" ");
+// }
 
 const findCheckedBoxes = () => {
-  let tagCheckboxes = $(".checked-tag");
-  let checkboxInfo = Array.from(tagCheckboxes)
-  let selectedTags = checkboxInfo.filter(box => {
+  // let tagCheckboxes = $(".checked-tag");
+  // let checkboxInfo = Array.from(tagCheckboxes)
+  // let checkboxInfo = Array.from($(".checked-tag"))
+  // let selectedTags = checkboxInfo.filter(box => {
+  let selectedTags = [...$(".checked-tag")].filter(box => {
     return box.checked;
   })
   findTaggedRecipes(selectedTags);
