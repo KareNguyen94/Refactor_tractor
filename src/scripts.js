@@ -184,7 +184,8 @@ const showSavedRecipes = () => {
     $(`#${recipe.id}`).hide()
   });
   // showMyRecipesBanner();
-  domUpdates.showMyRecipesBanner();
+  // domUpdates.showMyRecipesBanner();
+  domUpdates.showOrHideBanner('.my-recipes-banner', '.welcome-msg')
 }
 
 // CREATE RECIPE INSTRUCTIONS
@@ -266,10 +267,10 @@ const exitRecipe = () => {
 
 
 
-const showWelcomeBanner = () => {
-  $(".welcome-msg").css('display', "flex");
-  $(".my-recipes-banner").hide()
-}
+// const showWelcomeBanner = () => {
+//   $(".welcome-msg").css('display', "flex");
+//   $(".my-recipes-banner").hide()
+// }
 
 // SEARCH RECIPES
 const pressEnterSearch = (event) => {
@@ -315,7 +316,8 @@ const showAllRecipes = () => {
   recipes.forEach(recipe => {
     $(`#${recipe.id}`).css('display', "block");
   });
-  showWelcomeBanner();
+  // domUpdates.showWelcomeBanner();
+  domUpdates.showOrHideBanner('.welcome-msg','.my-recipes-banner')
 }
 
 // CREATE AND USE PANTRY
