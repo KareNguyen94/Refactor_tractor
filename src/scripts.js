@@ -200,8 +200,10 @@ const openRecipeInfo = (event) => {
     })
     .catch(error => console.log(error.message))
 
-    $(".recipe-instructions").append("<div id='inner-instructions'></div>")
-    $(".recipe-instructions").before("<section id='overlay'></div>")
+    domUpdates.showRecipeInstuctions();
+    domUpdates.applyOverlay();
+    // $(".recipe-instructions").append("<div id='inner-instructions'></div>")
+    // $(".recipe-instructions").before("<section id='overlay'></div>")
 }
 
 const fetchRecipe = (recipe) => {
