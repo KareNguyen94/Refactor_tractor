@@ -1,10 +1,6 @@
 /* RECIPE CARD SECTION */
 
-$main-font: "Quicksand", sans-serif;
-$dark-blue: #5B7894;
-$green: #359567;
-$light-green: #C4EB67;
-$slow-ease-in: .8s ease;
+@import 'variables';
 
 main {
   grid-area: main;

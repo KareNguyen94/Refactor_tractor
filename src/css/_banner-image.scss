@@ -1,11 +1,5 @@
 /* BANNER IMAGE*/
 
-$main-font: "Quicksand", sans-serif;
-$dark-blue: #5B7894;
-$green: #359567;
-$light-green: #C4EB67;
-$slow-ease-in: .8s ease;
-
 .banner-image {
   background: linear-gradient(rgba(0,0,0,.5), rgba(0,0,0,.5)),url("../images/green-apples.jpg");
   grid-area: image;
