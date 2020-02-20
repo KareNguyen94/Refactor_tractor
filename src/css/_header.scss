@@ -19,6 +19,19 @@ span {
   width: 35px;
 }
 
+.apple,
+.chef-hat {
+  width: 35px;
+  height: 40px;
+  margin-top: 10px;
+}
+
+.fav-btn {
+  background-color: $dark-blue;
+  border: none;
+  color: white;
+}
+
 .search-form {
   border-radius: 15px 15px 15px 15px;
   border: 3px outset $light-green;
@@ -110,9 +123,9 @@ span {
   padding: 2px 0px;
 }
 
-.saved-ingredients-btn {
-  border-left: 3px solid $light-green;
-}
+// .saved-ingredients-btn {
+//   border-left: 3px solid $light-green;
+// }
 
 .ing-pan-btn {
   margin: 1% 0%;

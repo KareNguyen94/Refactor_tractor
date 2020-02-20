@@ -11,8 +11,12 @@ main {
   flex-wrap: wrap;
 }
 
+.card-h3 {
+  color: white;
+}
+
 .recipe-card {
-  background-color: white;
+  background-color: lightslategray;
   border: 2px solid $light-green;
   border-radius: 7px;
   cursor: pointer;
