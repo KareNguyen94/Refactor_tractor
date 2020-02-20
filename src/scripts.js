@@ -114,7 +114,7 @@ const findCheckedBoxes = () => {
     return box.checked;
   })
   findTaggedRecipes(selectedTags);
-}
+};
 
 const findTaggedRecipes = (selected) => {
   let filteredResults = [];
@@ -183,7 +183,8 @@ const showSavedRecipes = () => {
   unsavedRecipes.forEach(recipe => {
     $(`#${recipe.id}`).hide()
   });
-  showMyRecipesBanner();
+  // showMyRecipesBanner();
+  domUpdates.showMyRecipesBanner();
 }
 
 // CREATE RECIPE INSTRUCTIONS
@@ -258,10 +259,10 @@ const exitRecipe = () => {
 }
 
 // TOGGLE DISPLAYS
-const showMyRecipesBanner = () => {
-    $(".welcome-msg").hide()
-    $('.my-recipes-banner').show()
-}
+// const showMyRecipesBanner = () => {
+//     $(".welcome-msg").hide()
+//     $('.my-recipes-banner').show()
+// }
 
 
 
