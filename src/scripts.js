@@ -159,7 +159,8 @@ function addToMyRecipes() {
       user.removeRecipe(cardId);
     }
   } else if (event.target.id === "exit-recipe-btn") {
-    exitRecipe();
+    // exitRecipe();
+    domUpdates.exitRecipe();
   } else if (isDescendant(event.target.closest(".recipe-card"), event.target)) {
     openRecipeInfo(event);
   }
@@ -190,7 +191,7 @@ const showSavedRecipes = () => {
 
 // CREATE RECIPE INSTRUCTIONS
 const openRecipeInfo = (event) => {
-  $(".recipe-instructions").css('display', 'inline')
+  // $(".recipe-instructions").css('display', 'inline')
   let recipeId = event.path.find(e => e.id).id;
   fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/recipes/recipeData')
     .then(response => response.json())
@@ -214,25 +215,27 @@ const fetchRecipe = (recipe) => {
         const ingredient = data.ingredientsData.find(ingredient => ingredient.id == recipeIngredient.id)
         recipeIngredient.name = ingredient.name;
       })
-      generateRecipeTitle(recipe, generateIngredients(recipe));
-      addRecipeImage(recipe);
+      domUpdates.generateRecipeTitle(recipe, generateIngredients(recipe))
+      // generateRecipeTitle(recipe, generateIngredients(recipe));
+      // addRecipeImage(recipe);
+      domUpdates.addRecipeImage(recipe);
       generateInstructions(recipe);
     })
     .catch(error => console.log(error.message))
 }
 
-const generateRecipeTitle = (recipe, ingredients) => {
-  let recipeTitle = `
-    <button id="exit-recipe-btn">X</button>
-    <h3 id="recipe-title">${recipe.name}</h3>
-    <h4>Ingredients</h4>
-    <p>${ingredients}</p>`
-  $("#inner-instructions").append(recipeTitle)
-}
+// const generateRecipeTitle = (recipe, ingredients) => {
+//   let recipeTitle = `
+//     <button id="exit-recipe-btn">X</button>
+//     <h3 id="recipe-title">${recipe.name}</h3>
+//     <h4>Ingredients</h4>
+//     <p>${ingredients}</p>`
+//   $("#inner-instructions").append(recipeTitle)
+// }
 
-const addRecipeImage = (recipe) => {
-$("#recipe-title").css('background-image', `url(${recipe.image})`)
-}
+// const addRecipeImage = (recipe) => {
+// $("#recipe-title").css('background-image', `url(${recipe.image})`)
+// }
 
 const generateIngredients = (recipe) => {
   return recipe && recipe.ingredients.map(i => {
@@ -242,24 +245,28 @@ const generateIngredients = (recipe) => {
 }
 
 const generateInstructions = (recipe) => {
-  let instructionsList = "";
+  // let instructionsList = "";
   let instructions = recipe.instructions.map(i => {
     return i.instruction
   });
-  instructions.forEach(i => {
-    instructionsList += `<li>${i}</li>`
-  });
-  $("#inner-instructions").append("<h4>Instructions</h4>");
-  $("#inner-instructions").append(`<ol>${instructionsList}</ol>`);
+  // debugger
+  domUpdates.populateInstructions(instructions);
+  // instructions.forEach(i => {
+  //   instructionsList += `<li>${i}</li>`
+  // });
+  // $("#inner-instructions").append("<h4>Instructions</h4>");
+  // $("#inner-instructions").append(`<ol>${instructionsList}</ol>`);
 }
 
-const exitRecipe = () => {
-  if ($("#inner-instructions")) {
-    $("#inner-instructions").remove()
-  }
-  $(".recipe-instructions").hide();
-  $("#overlay").remove();
-}
+
+
+// const exitRecipe = () => {
+//   if ($("#inner-instructions")) {
+//     $("#inner-instructions").remove()
+//   }
+//   $(".recipe-instructions").hide();
+//   $("#overlay").remove();
+// }
 
 // TOGGLE DISPLAYS
 // const showMyRecipesBanner = () => {
@@ -310,7 +317,8 @@ const toggleMenu = () => {
   if (menuOpen) {
     $(".drop-menu").css('display', 'block')
   } else {
-    $(".drop-menu").css('display', 'none')
+    // $(".drop-menu").css('display', 'none')
+    $(".drop-menu").hide();
   }
 }
 
