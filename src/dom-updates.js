@@ -46,17 +46,46 @@ let domUpdates = {
 
 
   showRecipeInstuctions() {
+    $(".recipe-instructions").css('display', 'inline')
     $(".recipe-instructions").append("<div id='inner-instructions'></div>")
   },
 
   applyOverlay() {
     $(".recipe-instructions").before("<section id='overlay'></div>")
-  }
+  },
   // showMyRecipesBanner() {
   //   $(".welcome-msg").hide()
   //   $('.my-recipes-banner').show()
   // },
 
+  generateRecipeTitle(recipe, ingredients) {
+    $("#inner-instructions").append(`
+      <button id="exit-recipe-btn">X</button>
+      <h3 id="recipe-title">${recipe.name}</h3>
+      <h4>Ingredients</h4>
+      <p>${ingredients}</p>`)
+
+  },
+
+  addRecipeImage(recipe) {
+    $("#recipe-title").css('background-image', `url(${recipe.image})`)
+  },
+
+  populateInstructions(instructions) {
+    let instructionsList = "";
+    instructions.forEach(i => {
+      instructionsList += `<li>${i}</li>`});
+    $("#inner-instructions").append("<h4>Instructions</h4>");
+    $("#inner-instructions").append(`<ol>${instructionsList}</ol>`)
+  },
+
+  exitRecipe() {
+    if ($("#inner-instructions")) {
+      $("#inner-instructions").remove()
+    }
+    $(".recipe-instructions").hide();
+    $("#overlay").remove();
+  }
 
   // showWelcomeBanner() {
   //   // $(".welcome-msg").css('display', "flex");
