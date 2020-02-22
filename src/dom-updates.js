@@ -85,8 +85,14 @@ let domUpdates = {
     }
     $(".recipe-instructions").hide();
     $("#overlay").remove();
-  }
+  },
 
+
+  showAllRecipes(recipes) {
+    recipes.forEach(recipe => {
+      $(`#${recipe.id}`).css('display', "block");
+    });
+  }
   // showWelcomeBanner() {
   //   // $(".welcome-msg").css('display', "flex");
   //   $(".welcome-msg").show();
