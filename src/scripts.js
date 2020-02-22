@@ -128,7 +128,8 @@ const findTaggedRecipes = (selected) => {
       }
     })
   });
-  showAllRecipes();
+  // showAllRecipes();
+  domUpdates.showAllRecipes(recipes);
   if (filteredResults.length > 0) {
     filterRecipes(filteredResults);
   }
@@ -295,7 +296,8 @@ const extractRecipes = (recipeData) => {
 }
 
 const searchRecipes = () => {
-  showAllRecipes();
+  // showAllRecipes();
+  domUpdates.showAllRecipes(recipes);
   receiveUserData('recipeData', 'recipes', extractRecipes);
 }
 
@@ -322,13 +324,18 @@ const toggleMenu = () => {
   }
 }
 
-const showAllRecipes = () => {
-  recipes.forEach(recipe => {
-    $(`#${recipe.id}`).css('display', "block");
-  });
-  // domUpdates.showWelcomeBanner();
-  domUpdates.showOrHideBanner('.welcome-msg','.my-recipes-banner')
-}
+const showRecipesHandler = () => {
+  domUpdates.showAllRecipes(recipes);
+  domUpdates.showOrHideBanner('.welcome-msg','.my-recipes-banner');
+};
+
+// const showAllRecipes = () => {
+//   recipes.forEach(recipe => {
+//     $(`#${recipe.id}`).css('display', "block");
+//   });
+//   // domUpdates.showWelcomeBanner();
+//   domUpdates.showOrHideBanner('.welcome-msg','.my-recipes-banner')
+// }
 
 // CREATE AND USE PANTRY
 const findPantryInfo = (ingredientsData) => {
@@ -374,7 +381,8 @@ const findCheckedPantryBoxes = () => {
   let selectedIngredients = pantryCheckboxInfo.filter(box => {
     return box.checked;
   })
-  showAllRecipes();
+  // showAllRecipes();
+  domUpdates.showAllRecipes(recipes);
   if (selectedIngredients.length > 0) {
     findRecipesWithCheckedIngredients(selectedIngredients);
   }
@@ -398,7 +406,8 @@ const findRecipesWithCheckedIngredients = (selected) => {
 }
 
 $('.show-pantry-recipes-btn').click(findCheckedPantryBoxes);
-$('.show-all-btn').click(showAllRecipes);
+$('.show-all-btn').click(showRecipesHandler);
+// $('.show-all-btn').click(showAllRecipes);
 $('.my-pantry-btn').click(toggleMenu);
 $('.search-btn').click(searchRecipes);
 $('#search').submit(pressEnterSearch);
