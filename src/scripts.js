@@ -354,17 +354,20 @@ const findPantryInfo = (ingredientsData) => {
       pantryInfo.push({name: itemInfo.name, count: item.amount});
     }
   });
-  displayPantryInfo(pantryInfo.sort((a, b) => a.name.localeCompare(b.name)));
-}
+  let sortedPantry = pantryInfo.sort((a, b) => a.name.localeCompare(b.name));
+  // displayPantryInfo(pantryInfo.sort((a, b) => a.name.localeCompare(b.name)));
+  domUpdates.displayPantryInfo(sortedPantry);
+};
 
 
-const displayPantryInfo = (pantry) => {
-  pantry.forEach(ingredient => {
-    let ingredientHtml = `<li><input type="checkbox" class="pantry-checkbox" id="${ingredient.name}">
-      <label for="${ingredient.name}">${ingredient.name}, ${ingredient.count}</label></li>`;
-    $(".pantry-list").append(ingredientHtml);
-  });
-}
+
+// const displayPantryInfo = (pantry) => {
+//   pantry.forEach(ingredient => {
+//     let ingredientHtml = `<li><input type="checkbox" class="pantry-checkbox" id="${ingredient.name}">
+//       <label for="${ingredient.name}">${ingredient.name}, ${ingredient.count}</label></li>`;
+//     $(".pantry-list").append(ingredientHtml);
+//   });
+// }
 
 const getIngredientData = () => {
   fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/ingredients/ingredientsData')
