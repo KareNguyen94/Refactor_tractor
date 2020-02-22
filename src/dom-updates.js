@@ -92,6 +92,15 @@ let domUpdates = {
     recipes.forEach(recipe => {
       $(`#${recipe.id}`).css('display', "block");
     });
+  },
+
+
+  displayPantryInfo(pantry) {
+    pantry.forEach(ingredient => {
+      let ingredientHtml = `<li><input type="checkbox" class="pantry-checkbox" id="${ingredient.name}">
+        <label for="${ingredient.name}">${ingredient.name}, ${ingredient.count}</label></li>`;
+      $(".pantry-list").append(ingredientHtml);
+    });
   }
   // showWelcomeBanner() {
   //   // $(".welcome-msg").css('display', "flex");
