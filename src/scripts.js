@@ -31,11 +31,6 @@ const receiveUserData = (dataSet, type, dataFunction) => {
 const getUserData = (data) => {
   user = new User(data[Math.floor(Math.random() * data.length)]);
   let firstName = user.name.split(" ")[0];
-  // let welcomeMsg = `
-  //   <div class="welcome-msg">
-  //     <h1>Welcome ${firstName}!</h1>
-  //   </div>`;
-  // $(".banner-image").prepend(welcomeMsg);
 domUpdates.welcomeMessage(firstName);
   getIngredientData();
 };
@@ -49,7 +44,6 @@ const createRecipeHandler = (recipeData) => {
     if (recipeInfo.name.length > 40) {
       shortRecipeName = recipeInfo.name.substring(0, 40) + "...";
     }
-    // addToDom(recipeInfo, shortRecipeName)
     domUpdates.addCardsToDom(recipeInfo, shortRecipeName);
   });
 }
@@ -58,23 +52,6 @@ const getRecipeData = (recipeData) => {
   createRecipeHandler(recipeData);
   findTags(recipeData);
 };
-
-// const addToDom = (recipeInfo, shortRecipeName) => {
-  // ;
-  // let cardHtml = `
-  //   <div class="recipe-card" id=${recipeInfo.id}>
-  //     <h3 maxlength="40">${shortRecipeName}</h3>
-  //     <div class="card-photo-container">
-  //       <img src=${recipeInfo.image} class="card-photo-preview" alt="${recipeInfo.name} recipe" title="${recipeInfo.name} recipe">
-  //       <div class="text">
-  //         <div>Click for Instructions</div>
-  //       </div>
-  //     </div>
-  //     <h4>${recipeInfo.tags[0]}</h4>
-  //     <img src="../images/apple-logo-outline.png" alt="unfilled apple icon" class="card-apple-icon">
-  //   </div>`
-  // $('main').append(cardHtml);
-// }
 
 // FILTER BY RECIPE TAGS
 const findTags = (recipeData) => {
@@ -91,19 +68,6 @@ const findTags = (recipeData) => {
   domUpdates.listTags(tags)
 };
 
-// const listTags = (allTags) => {
-//   allTags.forEach(tag => {
-//     let tagHtml = `<li><input type="checkbox" class="checked-tag" id="${tag}">
-//       <label for="${tag}">${capitalize(tag)}</label></li>`;
-//     $(tagList).append(tagHtml);
-//   });
-// }
-
-// const capitalize = (words) => {
-//   return words.split(" ").map(word => {
-//     return word.charAt(0).toUpperCase() + word.slice(1);
-//   }).join(" ");
-// }
 
 const findCheckedBoxes = () => {
   // let tagCheckboxes = $(".checked-tag");
@@ -128,7 +92,6 @@ const findTaggedRecipes = (selected) => {
       }
     })
   });
-  // showAllRecipes();
   domUpdates.showAllRecipes(recipes);
   if (filteredResults.length > 0) {
     filterRecipes(filteredResults);
@@ -160,7 +123,6 @@ function addToMyRecipes() {
       user.removeRecipe(cardId);
     }
   } else if (event.target.id === "exit-recipe-btn") {
-    // exitRecipe();
     domUpdates.exitRecipe();
   } else if (isDescendant(event.target.closest(".recipe-card"), event.target)) {
     openRecipeInfo(event);
@@ -185,14 +147,10 @@ const showSavedRecipes = () => {
   unsavedRecipes.forEach(recipe => {
     $(`#${recipe.id}`).hide()
   });
-  // showMyRecipesBanner();
-  // domUpdates.showMyRecipesBanner();
-  domUpdates.showOrHideBanner('.my-recipes-banner', '.welcome-msg')
 }
 
 // CREATE RECIPE INSTRUCTIONS
 const openRecipeInfo = (event) => {
-  // $(".recipe-instructions").css('display', 'inline')
   let recipeId = event.path.find(e => e.id).id;
   fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/recipes/recipeData')
     .then(response => response.json())
@@ -204,8 +162,6 @@ const openRecipeInfo = (event) => {
 
     domUpdates.showRecipeInstuctions();
     domUpdates.applyOverlay();
-    // $(".recipe-instructions").append("<div id='inner-instructions'></div>")
-    // $(".recipe-instructions").before("<section id='overlay'></div>")
 }
 
 const fetchRecipe = (recipe) => {
@@ -217,26 +173,11 @@ const fetchRecipe = (recipe) => {
         recipeIngredient.name = ingredient.name;
       })
       domUpdates.generateRecipeTitle(recipe, generateIngredients(recipe))
-      // generateRecipeTitle(recipe, generateIngredients(recipe));
-      // addRecipeImage(recipe);
       domUpdates.addRecipeImage(recipe);
       generateInstructions(recipe);
     })
     .catch(error => console.log(error.message))
-}
-
-// const generateRecipeTitle = (recipe, ingredients) => {
-//   let recipeTitle = `
-//     <button id="exit-recipe-btn">X</button>
-//     <h3 id="recipe-title">${recipe.name}</h3>
-//     <h4>Ingredients</h4>
-//     <p>${ingredients}</p>`
-//   $("#inner-instructions").append(recipeTitle)
-// }
-
-// const addRecipeImage = (recipe) => {
-// $("#recipe-title").css('background-image', `url(${recipe.image})`)
-// }
+};
 
 const generateIngredients = (recipe) => {
   return recipe && recipe.ingredients.map(i => {
@@ -246,41 +187,11 @@ const generateIngredients = (recipe) => {
 }
 
 const generateInstructions = (recipe) => {
-  // let instructionsList = "";
   let instructions = recipe.instructions.map(i => {
     return i.instruction
   });
-  // debugger
   domUpdates.populateInstructions(instructions);
-  // instructions.forEach(i => {
-  //   instructionsList += `<li>${i}</li>`
-  // });
-  // $("#inner-instructions").append("<h4>Instructions</h4>");
-  // $("#inner-instructions").append(`<ol>${instructionsList}</ol>`);
-}
-
-
-
-// const exitRecipe = () => {
-//   if ($("#inner-instructions")) {
-//     $("#inner-instructions").remove()
-//   }
-//   $(".recipe-instructions").hide();
-//   $("#overlay").remove();
-// }
-
-// TOGGLE DISPLAYS
-// const showMyRecipesBanner = () => {
-//     $(".welcome-msg").hide()
-//     $('.my-recipes-banner').show()
-// }
-
-
-
-// const showWelcomeBanner = () => {
-//   $(".welcome-msg").css('display', "flex");
-//   $(".my-recipes-banner").hide()
-// }
+};
 
 // SEARCH RECIPES
 const pressEnterSearch = (event) => {
@@ -296,7 +207,6 @@ const extractRecipes = (recipeData) => {
 }
 
 const searchRecipes = () => {
-  // showAllRecipes();
   domUpdates.showAllRecipes(recipes);
   receiveUserData('recipeData', 'recipes', extractRecipes);
 }
@@ -319,7 +229,6 @@ const toggleMenu = () => {
   if (menuOpen) {
     $(".drop-menu").css('display', 'block')
   } else {
-    // $(".drop-menu").css('display', 'none')
     $(".drop-menu").hide();
   }
 }
@@ -328,14 +237,6 @@ const showRecipesHandler = () => {
   domUpdates.showAllRecipes(recipes);
   domUpdates.showOrHideBanner('.welcome-msg','.my-recipes-banner');
 };
-
-// const showAllRecipes = () => {
-//   recipes.forEach(recipe => {
-//     $(`#${recipe.id}`).css('display', "block");
-//   });
-//   // domUpdates.showWelcomeBanner();
-//   domUpdates.showOrHideBanner('.welcome-msg','.my-recipes-banner')
-// }
 
 // CREATE AND USE PANTRY
 const findPantryInfo = (ingredientsData) => {
@@ -355,19 +256,8 @@ const findPantryInfo = (ingredientsData) => {
     }
   });
   let sortedPantry = pantryInfo.sort((a, b) => a.name.localeCompare(b.name));
-  // displayPantryInfo(pantryInfo.sort((a, b) => a.name.localeCompare(b.name)));
   domUpdates.displayPantryInfo(sortedPantry);
 };
-
-
-
-// const displayPantryInfo = (pantry) => {
-//   pantry.forEach(ingredient => {
-//     let ingredientHtml = `<li><input type="checkbox" class="pantry-checkbox" id="${ingredient.name}">
-//       <label for="${ingredient.name}">${ingredient.name}, ${ingredient.count}</label></li>`;
-//     $(".pantry-list").append(ingredientHtml);
-//   });
-// }
 
 const getIngredientData = () => {
   fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/ingredients/ingredientsData')
@@ -410,7 +300,6 @@ const findRecipesWithCheckedIngredients = (selected) => {
 
 $('.show-pantry-recipes-btn').click(findCheckedPantryBoxes);
 $('.show-all-btn').click(showRecipesHandler);
-// $('.show-all-btn').click(showAllRecipes);
 $('.my-pantry-btn').click(toggleMenu);
 $('.search-btn').click(searchRecipes);
 $('#search').submit(pressEnterSearch);
