@@ -11,8 +11,12 @@ main {
   flex-wrap: wrap;
 }
 
+.card-h3 {
+  color: white;
+}
+
 .recipe-card {
-  background-color: white;
+  background-color: lightslategray;
   border: 2px solid $light-green;
   border-radius: 7px;
   cursor: pointer;
@@ -43,9 +47,10 @@ main {
   .card-apple-icon {
     cursor: pointer;
     float: right;
-    height: 50px;
+    height: 40px;
     padding-bottom: 10px;
-    width: 45px;
+    width: 35px;
+    margin-top: 10px;
   }
 
   .text {
