@@ -175,7 +175,7 @@ const showToCookRecipes = () => {
   unsavedRecipes.forEach(recipe => {
     $(`#${recipe.id}`).hide()
   });
-  showMyRecipesBanner();
+  domUpdates.showOrHideBanner('.welcome-msg','.my-recipes-banner')
 }
 
 // CREATE RECIPE INSTRUCTIONS
