@@ -13,7 +13,6 @@ let domUpdates = {
   addCardsToDom(recipeInfo, shortRecipeName) {
       $('main').append(`<div class="recipe-card" id=${recipeInfo.id}>
       <h3 maxlength="40">${shortRecipeName}</h3>
-      <h3 class='card-h3'maxlength="40">${shortRecipeName}</h3>
       <div class="card-photo-container">
         <img src=${recipeInfo.image} class="card-photo-preview" alt="${recipeInfo.name} recipe" title="${recipeInfo.name} recipe">
         <div class="text">
