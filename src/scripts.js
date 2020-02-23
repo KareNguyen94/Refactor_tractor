@@ -198,6 +198,16 @@ const showSavedRecipes = () => {
   showMyRecipesBanner();
 }
 
+const showToCookRecipes = () => {
+  let unsavedRecipes = recipes.filter(recipe => {
+    return !user.recipesToCook.includes(recipe.id);
+  });
+  unsavedRecipes.forEach(recipe => {
+    $(`#${recipe.id}`).hide()
+  });
+  showMyRecipesBanner();
+}
+
 // CREATE RECIPE INSTRUCTIONS
 const openRecipeInfo = (event) => {
   $(".recipe-instructions").css('display', 'inline')
@@ -403,7 +413,8 @@ $('.search-btn').click(searchRecipes);
 $('#search').submit(pressEnterSearch);
 $(".filter-btn").click(findCheckedBoxes);
 $(".apple").click(showSavedRecipes);
-$('main').click(addToMyRecipes);
+$('.chef-hat').click(showToCookRecipes);
+$('main').click(addToMyRecipes);  
 $('main').click(addToCook);
 $('main').click(showInstructions)
 
