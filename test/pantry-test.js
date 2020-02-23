@@ -126,7 +126,7 @@ describe('Pantry', function() {
                 },
                 {
                   "ingredient": 10611282,
-                  "amount": 2,
+                  "amount": 3,
                   "name": "white onions",
                   "estimatedCostInCents": 449
                 },
@@ -143,7 +143,7 @@ describe('Pantry', function() {
                   "estimatedCostInCents": 675
                 },
             ];
-    recipeData = [{
+    recipeData = {
           "id": 595736,
           "image": "https://spoonacular.com/recipeImages/595736-556x370.jpg",
           "ingredients": [
@@ -199,7 +199,7 @@ describe('Pantry', function() {
               {
                   "id": 9152,
                   "quantity": {
-                      "amount": 24,
+                      "amount": 4,
                       "unit": "servings"
                   }
               },
@@ -224,7 +224,7 @@ describe('Pantry', function() {
                       "unit": "tsp"
                   }
               }
-            }]
+            }
     pantry = new Pantry(pantryData);
   })
 
@@ -235,4 +235,8 @@ describe('Pantry', function() {
   it('should be an instance of Recipe', function() {
     expect(pantry).to.be.an.instanceof(Pantry);
   });
+
+  it('should determine whether my pantry has enough ingredients to cook a given meal', function() {
+
+  })
 });
