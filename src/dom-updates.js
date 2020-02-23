@@ -60,8 +60,8 @@ let domUpdates = {
 
   generateRecipeTitle(recipe, ingredients) {
     $("#inner-instructions").append(`
-      <button id="exit-recipe-btn">X</button>
-      <h3 id="recipe-title">${recipe.name}</h3>
+      <button id="exit-recipe-btn" class="exit-recipe-button">X</button>
+      <h3 id="recipe-title" class="recipe-header">${recipe.name}</h3>
       <h4>Ingredients</h4>
       <p>${ingredients}</p>`)
 
