@@ -39,9 +39,9 @@ let domUpdates = {
     }).join(" ");
   },
 
-  showOrHideBanner(welcome, recipe) {
-    $(`${welcome}`).show()
-    $(`${recipe}`).hide()
+  showOrHideBanner(hide, show) {
+    $(`${show}`).show()
+    $(`${hide}`).hide()
   },
 
 
