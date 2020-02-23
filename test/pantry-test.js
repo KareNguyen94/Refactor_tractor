@@ -6,6 +6,7 @@ const Pantry = require('../src/pantry');
 describe('Pantry', function() {
   let pantry;
   let pantryData;
+  let recipeData;
 
   beforeEach(function() {
     pantryData = [
@@ -94,7 +95,7 @@ describe('Pantry', function() {
                   "estimatedCostInCents": 955
                 },
                 {
-                  "ingredient": 18371,
+                  "ingredient": 19334,
                   "amount": 7,
                   "name": "bicarbonate of soda",
                   "estimatedCostInCents": 582
@@ -106,13 +107,13 @@ describe('Pantry', function() {
                   "estimatedCostInCents": 618
                 },
                 {
-                  "ingredient": 99223,
+                  "ingredient": 1145,
                   "amount": 2,
                   "name": "canned chipotle chilies in adobo",
                   "estimatedCostInCents": 299
                 },
                 {
-                  "ingredient": 1230,
+                  "ingredient": 10019903,
                   "amount": 2,
                   "name": "buttermilk",
                   "estimatedCostInCents": 773
@@ -142,6 +143,88 @@ describe('Pantry', function() {
                   "estimatedCostInCents": 675
                 },
             ];
+    recipeData = [{
+          "id": 595736,
+          "image": "https://spoonacular.com/recipeImages/595736-556x370.jpg",
+          "ingredients": [
+              {
+                  "id": 20081,
+                  "quantity": {
+                      "amount": 1.5,
+                      "unit": "c"
+                  }
+              },
+              {
+                  "id": 14106,
+                  "quantity": {
+                      "amount": 0.5,
+                      "unit": "tsp"
+                  }
+              },
+              {
+                  "id": 1123,
+                  "quantity": {
+                      "amount": 1,
+                      "unit": "large"
+                  }
+              },
+              {
+                  "id": 93607,
+                  "quantity": {
+                      "amount": 0.5,
+                      "unit": "c"
+                  }
+              },
+              {
+                  "id": 10611282,
+                  "quantity": {
+                      "amount": 3,
+                      "unit": "Tbsp"
+                  }
+              },
+              {
+                  "id": 19334,
+                  "quantity": {
+                      "amount": 0.5,
+                      "unit": "c"
+                  }
+              },
+              {
+                  "id": 2047,
+                  "quantity": {
+                      "amount": 0.5,
+                      "unit": "tsp"
+                  }
+              },
+              {
+                  "id": 9152,
+                  "quantity": {
+                      "amount": 24,
+                      "unit": "servings"
+                  }
+              },
+              {
+                  "id": 10019903,
+                  "quantity": {
+                      "amount": 2,
+                      "unit": "c"
+                  }
+              },
+              {
+                  "id": 1145,
+                  "quantity": {
+                      "amount": 0.5,
+                      "unit": "c"
+                  }
+              },
+              {
+                  "id": 2050,
+                  "quantity": {
+                      "amount": 0.5,
+                      "unit": "tsp"
+                  }
+              }
+            }]
     pantry = new Pantry(pantryData);
   })
 
