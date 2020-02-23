@@ -147,6 +147,7 @@ const showSavedRecipes = () => {
   unsavedRecipes.forEach(recipe => {
     $(`#${recipe.id}`).hide()
   });
+  domUpdates.showOrHideBanner('.welcome-msg','.my-recipes-banner')
 }
 
 // CREATE RECIPE INSTRUCTIONS
@@ -235,7 +236,7 @@ const toggleMenu = () => {
 
 const showRecipesHandler = () => {
   domUpdates.showAllRecipes(recipes);
-  domUpdates.showOrHideBanner('.welcome-msg','.my-recipes-banner');
+  domUpdates.showOrHideBanner('.my-recipes-banner', '.welcome-msg');
 };
 
 // CREATE AND USE PANTRY
