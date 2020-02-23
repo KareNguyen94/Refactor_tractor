@@ -117,7 +117,7 @@ function showInstructions() {
   if(event.target.className === "card-photo-preview") {
     openRecipeInfo(event);
   } else if (event.target.id === "exit-recipe-btn") {
-    exitRecipe();
+    domUpdates.exitRecipe();
   }
 }
 
