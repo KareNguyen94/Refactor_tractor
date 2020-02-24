@@ -11,6 +11,7 @@ import './images/seasoning.png'
 
 import User from './user';
 import Recipe from './recipe';
+import Pantry from './pantry';
 
 let menuOpen = false;
 let pantryInfo = [];
@@ -310,3 +311,6 @@ $('main').click(addToMyRecipes);
 
 receiveUserData('wcUsersData', 'users', getUserData);
 receiveUserData('recipeData', 'recipes', getRecipeData);
+
+const pantry = new Pantry()
+pantry.fetchIngredients()
