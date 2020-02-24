@@ -136,4 +136,9 @@ describe('Pantry', function() {
       }
     ]);
   });
+
+  it('should calculate how much it will cost to buy the necessary ingredients needed to cook a given meal', function() {
+    expect(pantry.calcCostOfIngredientsNeeded(ingredientsData, recipeData)).to.eq(6448.5);
+  });
+
 });
