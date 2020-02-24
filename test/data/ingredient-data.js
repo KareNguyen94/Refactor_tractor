@@ -128,6 +128,11 @@ let ingredientsData = [
     "id": 6615,
     "name": "vegetable stock",
     "estimatedCostInCents": 613
+  },
+  {
+    "id": 1,
+    "name": "vegetable stock",
+    "estimatedCostInCents": 613
   }
 ]
 
