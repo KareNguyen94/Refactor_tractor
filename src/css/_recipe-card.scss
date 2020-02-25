@@ -15,6 +15,11 @@ main {
   color: white;
 }
 
+.card-button {
+  outline-color: lightslategray;
+  background-color: lightslategray;
+}
+
 .recipe-card {
   background-color: lightslategray;
   border: 2px solid $light-green;
@@ -31,6 +36,7 @@ main {
     height: 130px;
     justify-content: center;
     position: relative;
+    
 
     .card-photo-preview {
       background-position: 50% 50%;
@@ -48,9 +54,9 @@ main {
     cursor: pointer;
     float: right;
     height: 40px;
-    padding-bottom: 10px;
+    // padding-bottom: 10px;
     width: 35px;
-    margin-top: 10px;
+    // margin-top: 10px;
   }
 
   .text {
@@ -94,7 +100,7 @@ main {
   background-color: $green;
   border: 0;
   border-radius: 3px;
-  color: white;
+  color: black;
   cursor: pointer;
   font-family: $main-font;
   font-size: 12pt;

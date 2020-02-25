@@ -20,8 +20,8 @@ let domUpdates = {
         </div>
       </div>
       <h4>${recipeInfo.tags[0]}</h4>
-      <img src="../images/cookbook.svg" alt="chef hat icon" class="chef-hat">
-      <img src="../images/apple-logo-outline.png" alt="unfilled apple icon" class="card-apple-icon">
+      <button type='button' class="card-button"><img src="../images/cookbook.svg" alt="chef hat icon" class="chef-hat"></button>
+      <button type='button' class="card-button"><img src="../images/apple-logo-outline.png" alt="unfilled apple icon" class="card-apple-icon"></button>
     </div>`);
     },
 
