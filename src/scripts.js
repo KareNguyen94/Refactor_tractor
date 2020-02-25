@@ -17,7 +17,7 @@ let menuOpen = false;
 let pantryInfo = [];
 let recipes = [];
 let searchInput = document.querySelector("#search-input");
-let tagList = document.querySelector(".tag-list");
+// let tagList = document.querySelector(".tag-list");
 let user;
 
 
@@ -298,8 +298,38 @@ const findRecipesWithCheckedIngredients = (selected) => {
       $(`#${recipe.id}`).hide();
     }
   })
+};
+
+//PANTRY
+const updatePantry = () => {
+  if (event.target.classList.contains('cook-now')){
+    // console.log('YEET')
+    const pantry = new Pantry(user.pantry)
+    let matchedRecipe = recipes.find(recipe => {
+      return recipe.id == event.target.parentElement.id
+    })
+    let isMatched = pantry.hasEnoughIngredientsForRecipe(matchedRecipe);
+    console.log(isMatched)
+    if(isMatched) {
+       console.log('you have enough')
+    } else {
+      console.log('oops! need more ingredients')
+      fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/ingredients/ingredientsData')
+        .then(response => response.json())
+        .then(data => {
+          let neededIngredients = pantry.ingredientsNeededForARecipe(matchedRecipe, data.ingredientsData)
+        })
+    }
+  }
+};
+
+const showMissingIngredients = () => {
+  
 }
 
+
+
+$("main").click(updatePantry);
 $('.show-pantry-recipes-btn').click(findCheckedPantryBoxes);
 $('.show-all-btn').click(showRecipesHandler);
 $('.my-pantry-btn').click(toggleMenu);
@@ -307,10 +337,7 @@ $('.search-btn').click(searchRecipes);
 $('#search').submit(pressEnterSearch);
 $(".filter-btn").click(findCheckedBoxes);
 $(".saved-recipes-btn").click(showSavedRecipes);
-$('main').click(addToMyRecipes);
+// $('main').click(addToMyRecipes);
 
 receiveUserData('wcUsersData', 'users', getUserData);
 receiveUserData('recipeData', 'recipes', getRecipeData);
-
-const pantry = new Pantry()
-pantry.fetchIngredients()

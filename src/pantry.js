@@ -52,8 +52,6 @@ class Pantry {
     let neededIngredients = recipeData.ingredients;
     return neededIngredients.reduce((cost, recipeIngredient) => {
       let foundIngredient = this.findIngredient(ingredientsData, recipeIngredient);
-      console.log("found ingred", foundIngredient);
-      console.log("recipeIngred",recipeIngredient);
       cost += foundIngredient.estimatedCostInCents * recipeIngredient.quantity.amount;
       return cost
     }, 0);
