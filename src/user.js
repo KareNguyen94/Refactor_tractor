@@ -15,12 +15,23 @@ class User {
     this.favoriteRecipes.splice(i, 1);
   }
 
-  decideToCook(recipe) {
+  saveToCook(recipe) {
     this.recipesToCook.push(recipe);
   }
+
+  removeToCook(recipe) {
+    let i = this.recipesToCook.indexOf(recipe);
+    this.recipesToCook.splice(i, 1);
+  }
+
   filterRecipes(type) {
     return this.favoriteRecipes.filter(recipe => recipe.type.includes(type));
   }
+
+  decideToCook(recipe) {
+    this.recipesToCook.push(recipe);
+  }
+
   searchForRecipe(keyword) {
     return this.favoriteRecipes.filter(recipe => recipe.name.includes(keyword) || recipe.ingredients.includes(keyword));
   }

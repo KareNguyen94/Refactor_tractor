@@ -6,7 +6,8 @@ import './css/styles.scss';
 import './images/apple-logo.png'
 import './images/apple-logo-outline.png'
 import './images/search.png'
-import './images/cookbook.png'
+import './images/cookbook.svg'
+import './images/cookbook2.svg'
 import './images/seasoning.png'
 
 import User from './user';
@@ -53,7 +54,6 @@ const getRecipeData = (recipeData) => {
   createRecipeHandler(recipeData);
   findTags(recipeData);
 };
-
 // FILTER BY RECIPE TAGS
 const findTags = (recipeData) => {
   let tags = [];
@@ -112,7 +112,16 @@ const hideUnselectedRecipes = (foundRecipes) => {
   });
 }
 
-// FAVORITE RECIPE FUNCTIONALITY
+// FAVORITE/TO COOK RECIPE FUNCTIONALITY
+
+function showInstructions() {
+  if(event.target.className === "card-photo-preview") {
+    openRecipeInfo(event);
+  } else if (event.target.id === "exit-recipe-btn") {
+    domUpdates.exitRecipe();
+  }
+}
+
 function addToMyRecipes() {
   if (event.target.className === "card-apple-icon") {
     let cardId = parseInt(event.target.closest(".recipe-card").id)
@@ -130,6 +139,19 @@ function addToMyRecipes() {
   }
 }
 
+function addToCook() {
+  if (event.target.className === "chef-hat") {
+    let cardId = parseInt(event.target.closest(".recipe-card").id)
+    if (!user.recipesToCook.includes(cardId)) {
+      event.target.src = "../images/cookbook2.svg";
+      user.saveToCook(cardId);
+    } else {
+      event.target.src = "../images/cookbook.svg";
+      user.removeToCook(cardId);
+    }
+  }
+}
+
 const isDescendant = (parent, child) => {
   let node = child;
   while (node !== null) {
@@ -144,6 +166,16 @@ const isDescendant = (parent, child) => {
 const showSavedRecipes = () => {
   let unsavedRecipes = recipes.filter(recipe => {
     return !user.favoriteRecipes.includes(recipe.id);
+  });
+  unsavedRecipes.forEach(recipe => {
+    $(`#${recipe.id}`).hide()
+  });
+  domUpdates.showOrHideBanner('.welcome-msg','.my-recipes-banner')
+}
+
+const showToCookRecipes = () => {
+  let unsavedRecipes = recipes.filter(recipe => {
+    return !user.recipesToCook.includes(recipe.id);
   });
   unsavedRecipes.forEach(recipe => {
     $(`#${recipe.id}`).hide()
@@ -343,8 +375,11 @@ $('.my-pantry-btn').click(toggleMenu);
 $('.search-btn').click(searchRecipes);
 $('#search').submit(pressEnterSearch);
 $(".filter-btn").click(findCheckedBoxes);
-$(".saved-recipes-btn").click(showSavedRecipes);
+$(".apple").click(showSavedRecipes);
+$('.chef-hat').click(showToCookRecipes);
 $('main').click(addToMyRecipes);
+$('main').click(addToCook);
+$('main').click(showInstructions)
 
 receiveUserData('wcUsersData', 'users', getUserData);
 receiveUserData('recipeData', 'recipes', getRecipeData);
