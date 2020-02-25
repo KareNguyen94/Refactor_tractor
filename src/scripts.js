@@ -314,16 +314,25 @@ const updatePantry = () => {
        console.log('you have enough')
     } else {
       console.log('oops! need more ingredients')
+      
       fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/ingredients/ingredientsData')
         .then(response => response.json())
         .then(data => {
           let neededIngredients = pantry.ingredientsNeededForARecipe(matchedRecipe, data.ingredientsData)
+          // console.log(neededIngredients);
+          showMissingIngredients(neededIngredients)
         })
     }
   }
 };
 
-const showMissingIngredients = () => {
+const showMissingIngredients = (neededIngredients) => {
+  let missingIngredientHTML =  neededIngredients.reduce((html, ingredient) => {
+   html += `<p>${ingredient.name}</p>
+    <p>${ingredient.amountNeeded}</p>`
+    return html 
+  }, ``)
+  $('.missing-ingredients').append(missingIngredientHTML)
   
 }
 
@@ -337,7 +346,7 @@ $('.search-btn').click(searchRecipes);
 $('#search').submit(pressEnterSearch);
 $(".filter-btn").click(findCheckedBoxes);
 $(".saved-recipes-btn").click(showSavedRecipes);
-// $('main').click(addToMyRecipes);
+$('main').click(addToMyRecipes);
 
 receiveUserData('wcUsersData', 'users', getUserData);
 receiveUserData('recipeData', 'recipes', getRecipeData);

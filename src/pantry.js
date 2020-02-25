@@ -42,7 +42,9 @@ class Pantry {
 
   ingredientsNeededForARecipe(recipeData, ingredientsData) {
     return recipeData.ingredients.reduce((missingIngredients, recipeIngredient) => {
-      let existingIngredient = this.findIngredient(this.ingredients, recipeIngredient);
+      let existingIngredient = this.ingredients.find(ingredient => {
+        return ingredient.ingredient === recipeIngredient.id;
+      });
       missingIngredients = this.createMissingIngredient(existingIngredient, recipeIngredient, missingIngredients, ingredientsData);
       return missingIngredients;
     }, []);
