@@ -11,7 +11,9 @@ class Pantry {
 
   hasEnoughIngredientsForRecipe(recipeData) {
     return recipeData.ingredients.every((recipeIngredient => {
-      let existingIngredient = this.findIngredient(this.ingredients, recipeIngredient);
+      let existingIngredient = this.ingredients.find(ingredient => {
+        return ingredient.ingredient === recipeIngredient.id;
+      });
       if (existingIngredient) {
         return existingIngredient.amount >= recipeIngredient.quantity.amount;
       }
@@ -32,7 +34,6 @@ class Pantry {
   createIngredientIfDearth(existingIngredient, recipeIngredient, missingIngredients, ingredientsData) {
     if (existingIngredient.amount < recipeIngredient.quantity.amount) {
       let foundIngredient = this.findIngredient(ingredientsData, recipeIngredient);
-      console.log(existingIngredient, foundIngredient)
       missingIngredients.push({
         id: foundIngredient.id,
         name: foundIngredient.name,
@@ -59,6 +60,17 @@ class Pantry {
       cost += foundIngredient.estimatedCostInCents * recipeIngredient.quantity.amount;
       return cost
     }, 0);
+  }
+
+  buildPantryDeleteRequests(matchedRecipe, userID) {
+    return matchedRecipe.ingredients.reduce((postRequests, recipeIngredient) => {
+      postRequests.push({
+        userId: userID,
+        ingredientID: recipeIngredient.id,
+        ingredientModification: recipeIngredient.quantity.amount
+      });
+      return postRequests
+    }, [])
   }
 }
 
