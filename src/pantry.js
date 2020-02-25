@@ -20,7 +20,7 @@ class Pantry {
 
   createMissingIngredient(existingIngredient, recipeIngredient, missingIngredients, ingredientsData) {
     if (existingIngredient) {
-      missingIngredients = this.createIngredientIfDearth(existingIngredient, recipeIngredient, missingIngredients)
+      missingIngredients = this.createIngredientIfDearth(existingIngredient, recipeIngredient, missingIngredients, ingredientsData)
     } else {
       let nonExistingIngredient = this.findIngredient(ingredientsData, recipeIngredient);
       nonExistingIngredient.amountNeeded = recipeIngredient.quantity.amount;
@@ -29,11 +29,13 @@ class Pantry {
     return missingIngredients;
   }
 
-  createIngredientIfDearth(existingIngredient, recipeIngredient, missingIngredients) {
+  createIngredientIfDearth(existingIngredient, recipeIngredient, missingIngredients, ingredientsData) {
     if (existingIngredient.amount < recipeIngredient.quantity.amount) {
+      let foundIngredient = this.findIngredient(ingredientsData, recipeIngredient);
+      console.log(existingIngredient, foundIngredient)
       missingIngredients.push({
-        id: existingIngredient.id,
-        name: existingIngredient.name,
+        id: foundIngredient.id,
+        name: foundIngredient.name,
         amountNeeded: recipeIngredient.quantity.amount - existingIngredient.amount
       })
     }
