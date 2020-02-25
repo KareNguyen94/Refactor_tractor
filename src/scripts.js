@@ -125,7 +125,7 @@ function addToMyRecipes() {
     }
   } else if (event.target.id === "exit-recipe-btn") {
     domUpdates.exitRecipe();
-  } else if (isDescendant(event.target.closest(".recipe-card"), event.target)) {
+  } else if (isDescendant(event.target.closest(".card-photo-container"), event.target)) {
     openRecipeInfo(event);
   }
 }
@@ -174,7 +174,7 @@ const fetchRecipe = (recipe) => {
         const ingredient = data.ingredientsData.find(ingredient => ingredient.id == recipeIngredient.id)
         recipeIngredient.name = ingredient.name;
       })
-      domUpdates.generateRecipeTitle(recipe, generateIngredients(recipe))
+      domUpdates.generateRecipeTitle(recipe, generateIngredients(recipe), 'Ingredients')
       domUpdates.addRecipeImage(recipe);
       generateInstructions(recipe);
     })
@@ -303,37 +303,35 @@ const findRecipesWithCheckedIngredients = (selected) => {
 //PANTRY
 const updatePantry = () => {
   if (event.target.classList.contains('cook-now')){
-    // console.log('YEET')
     const pantry = new Pantry(user.pantry)
     let matchedRecipe = recipes.find(recipe => {
       return recipe.id == event.target.parentElement.id
     })
     let isMatched = pantry.hasEnoughIngredientsForRecipe(matchedRecipe);
-    console.log(isMatched)
     if(isMatched) {
        console.log('you have enough')
     } else {
       console.log('oops! need more ingredients')
-      
+
       fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/ingredients/ingredientsData')
         .then(response => response.json())
         .then(data => {
           let neededIngredients = pantry.ingredientsNeededForARecipe(matchedRecipe, data.ingredientsData)
-          // console.log(neededIngredients);
-          showMissingIngredients(neededIngredients)
+          showMissingIngredients(neededIngredients, matchedRecipe);
         })
     }
   }
 };
 
-const showMissingIngredients = (neededIngredients) => {
+const showMissingIngredients = (neededIngredients, recipe) => {
   let missingIngredientHTML =  neededIngredients.reduce((html, ingredient) => {
    html += `<p>${ingredient.name}</p>
     <p>${ingredient.amountNeeded}</p>`
-    return html 
+    return html
   }, ``)
-  $('.missing-ingredients').append(missingIngredientHTML)
-  
+  domUpdates.showRecipeInstuctions();
+  domUpdates.generateRecipeTitle(recipe, missingIngredientHTML, 'Missing Ingredients')
+  domUpdates.addRecipeImage(recipe);
 }
 
 
