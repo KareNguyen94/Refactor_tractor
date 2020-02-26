@@ -144,17 +144,17 @@ describe('Pantry', function() {
 
   it('should be able to build pantry delete requests', function(){
     expect(pantry.buildPantryDeleteRequests(recipeData, 1)).to.deep.equal([
-      { userId: 1, ingredientID: 20081, ingredientModification: 1.5 },
-      { userId: 1, ingredientID: 14106, ingredientModification: 0.5 },
-      { userId: 1, ingredientID: 1123, ingredientModification: 1 },
-      { userId: 1, ingredientID: 93607, ingredientModification: 0.5 },
-      { userId: 1, ingredientID: 10611282, ingredientModification: 3 },
-      { userId: 1, ingredientID: 19334, ingredientModification: 0.5 },
-      { userId: 1, ingredientID: 2047, ingredientModification: 0.5 },
-      { userId: 1, ingredientID: 9152, ingredientModification: 4 },
-      { userId: 1, ingredientID: 10019903, ingredientModification: 2 },
-      { userId: 1, ingredientID: 1145, ingredientModification: 0.5 },
-      { userId: 1, ingredientID: 2050, ingredientModification: 0.5 }
+      { userID: 1, ingredientID: 20081, ingredientModification: -1.5 },
+      { userID: 1, ingredientID: 14106, ingredientModification: -0.5 },
+      { userID: 1, ingredientID: 1123, ingredientModification: -1 },
+      { userID: 1, ingredientID: 93607, ingredientModification: -0.5 },
+      { userID: 1, ingredientID: 10611282, ingredientModification: -3 },
+      { userID: 1, ingredientID: 19334, ingredientModification: -0.5 },
+      { userID: 1, ingredientID: 2047, ingredientModification: -0.5 },
+      { userID: 1, ingredientID: 9152, ingredientModification: -4 },
+      { userID: 1, ingredientID: 10019903, ingredientModification: -2 },
+      { userID: 1, ingredientID: 1145, ingredientModification: -0.5 },
+      { userID: 1, ingredientID: 2050, ingredientModification: -0.5 }
     ]);
   });
 
