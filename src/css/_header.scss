@@ -42,7 +42,7 @@ span {
   flex-direction: row;
   font-family: $main-font;
   justify-content: center;
-  margin: 1.2% 19.5% 1.2% 0%;
+  margin: 1.2% 9.5% 1.2% 0%;
   width: 100%;
 }
 
@@ -60,6 +60,7 @@ span {
   text-align: right;
   transition: $slow-ease-in;
   width: 100%;
+  min-width: 4em;
 }
 
 .search-field:hover {
