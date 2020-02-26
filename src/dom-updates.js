@@ -54,10 +54,6 @@ let domUpdates = {
   applyOverlay() {
     $(".recipe-instructions").before("<section id='overlay'></div>")
   },
-  // showMyRecipesBanner() {
-  //   $(".welcome-msg").hide()
-  //   $('.my-recipes-banner').show()
-  // },
 
   generateRecipeTitle(recipe, ingredients) {
     $("#inner-instructions").append(`
@@ -103,15 +99,6 @@ let domUpdates = {
       $(".pantry-list").append(ingredientHtml);
     });
   }
-  // showWelcomeBanner() {
-  //   // $(".welcome-msg").css('display', "flex");
-  //   $(".welcome-msg").show();
-  //   $(".my-recipes-banner").hide()
-  // },
-
-
-
-
 
 }
 
