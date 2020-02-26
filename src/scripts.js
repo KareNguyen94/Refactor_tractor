@@ -347,6 +347,11 @@ function addOrRemoveIngredientsFromPantry(postBodies) {
   })
 }
 
+const replaceUser = (userData) => {
+  user = userData.find(userObj => userObj.id == user.id);
+  debugger;
+}
+
 //PANTRY
 const updatePantry = () => {
   if (event.target.classList.contains('cook-now')){
@@ -363,6 +368,7 @@ const updatePantry = () => {
        domUpdates.applyOverlay();
        const postBodies = pantry.buildPantryDeleteRequests(matchedRecipe, user.id);
        addOrRemoveIngredientsFromPantry(postBodies);
+       receiveUserData('wcUsersData', 'users', replaceUser);
     } else {
       fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/ingredients/ingredientsData')
         .then(response => response.json())
@@ -373,6 +379,24 @@ const updatePantry = () => {
     }
   }
 };
+
+const addIngredientsToPantry = (event) => {
+  if(event.target.id === "add-ingredients-btn") {
+    let ingredients = event.target.parentElement.querySelectorAll('.amount-needed');
+    let postBodies = [];
+    ingredients.forEach(ingredient => {
+      let body = {
+        userID: user.id,
+        ingredientID: parseInt(ingredient.id),
+        ingredientModification: parseFloat(ingredient.innerText)
+      }
+      postBodies.push(body);
+    })
+    addOrRemoveIngredientsFromPantry(postBodies);
+    receiveUserData('wcUsersData', 'users', replaceUser);
+  }
+}
+
 
 const showMissingIngredients = (neededIngredients, recipe) => {
   let missingIngredientHTML =  neededIngredients.reduce((html, ingredient) => {
@@ -400,6 +424,6 @@ $('.chef-hat').click(showToCookRecipes);
 $('main').click(addToMyRecipes);
 $('main').click(addToCook);
 $('main').click(showInstructions)
-
+$('#recipe-instructions-card').click(addIngredientsToPantry)
 receiveUserData('wcUsersData', 'users', getUserData);
 receiveUserData('recipeData', 'recipes', getRecipeData);
