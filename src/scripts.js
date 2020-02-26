@@ -206,7 +206,8 @@ const fetchRecipe = (recipe) => {
         const ingredient = data.ingredientsData.find(ingredient => ingredient.id == recipeIngredient.id)
         recipeIngredient.name = ingredient.name;
       })
-      domUpdates.generateRecipeTitle(recipe, generateIngredients(recipe), 'Ingredients')
+      domUpdates.generateRecipeTitle(recipe, 'Ingredients')
+      domUpdates.insertIngredients(generateIngredients(recipe));
       domUpdates.addRecipeImage(recipe);
       generateInstructions(recipe);
     })
@@ -356,7 +357,8 @@ const updatePantry = () => {
     let isMatched = pantry.hasEnoughIngredientsForRecipe(matchedRecipe);
     if(isMatched) {
        domUpdates.showRecipeInstuctions();
-       domUpdates.generateRecipeTitle(matchedRecipe, `<p>The Ingredients Have been removed from you pantry</p>`, 'Success! You have enough ingredients!')
+       domUpdates.generateRecipeTitle(matchedRecipe, 'Success! You have enough ingredients!')
+       domUpdates.insertIngredients(`<p>The Ingredients Have been removed from you pantry</p>`);
        domUpdates.addRecipeImage(matchedRecipe);
        domUpdates.applyOverlay();
        const postBodies = pantry.buildPantryDeleteRequests(matchedRecipe, user.id);
@@ -375,11 +377,13 @@ const updatePantry = () => {
 const showMissingIngredients = (neededIngredients, recipe) => {
   let missingIngredientHTML =  neededIngredients.reduce((html, ingredient) => {
    html += `<p>${ingredient.name}</p>
-    <p>${ingredient.amountNeeded}</p>`
+    <p id="${ingredient.id}" class="amount-needed">${ingredient.amountNeeded}</p>`
     return html
   }, ``)
   domUpdates.showRecipeInstuctions();
-  domUpdates.generateRecipeTitle(recipe, missingIngredientHTML, 'Missing Ingredients')
+  domUpdates.generateRecipeTitle(recipe, 'Missing Ingredients')
+  domUpdates.insertButton();
+  domUpdates.insertIngredients(missingIngredientHTML);
   domUpdates.addRecipeImage(recipe);
   domUpdates.applyOverlay();
 }
