@@ -63,12 +63,14 @@ let domUpdates = {
   //   $('.my-recipes-banner').show()
   // },
 
-  generateRecipeTitle(recipe, ingredients, title) {
+  generateRecipeTitle(recipe, title) {
     $("#inner-instructions").append(`
       <h3 id="recipe-title" class="recipe-header">${recipe.name}</h3>
-      <h4>${title}</h4>
-      <p>${ingredients}</p>`)
+      <h4>${title}</h4>`)
+  },
 
+  insertIngredients(ingredientHTML) {
+    $("#inner-instructions").append(`<p>${ingredientHTML}</p>`);
   },
 
   addRecipeImage(recipe) {
@@ -105,6 +107,10 @@ let domUpdates = {
         <label for="${ingredient.name}">${ingredient.name}, ${ingredient.count}</label></li>`;
       $(".pantry-list").append(ingredientHtml);
     });
+  },
+
+  insertButton() {
+    $("#inner-instructions").append(`<button id="add-ingredients-btn">Add Missing Ingredients to Pantry</button>`)
   }
   // showWelcomeBanner() {
   //   // $(".welcome-msg").css('display', "flex");
