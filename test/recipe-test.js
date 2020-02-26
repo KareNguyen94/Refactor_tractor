@@ -1,15 +1,14 @@
 import { expect } from 'chai';
 
 import Recipe from '../src/recipe';
-import data from '../data/recipe-data';
+import data from './data/recipe-data';
 
 describe('Recipe', function() {
   let recipe;
   let recipeInfo;
 
   beforeEach(function() {
-    recipeInfo = data.recipeData[0];
-    recipe = new Recipe(recipeInfo);
+    recipe = new Recipe(data);
   })
 
   it('is a function', function() {
@@ -35,7 +34,6 @@ describe('Recipe', function() {
   it('should initialize with an array of ingredients', function() {
     const ingredient = {
       "id": 20081,
-      "name": "all purpose flour",
       "quantity": {
         "amount": 1.5,
         "unit": "c"

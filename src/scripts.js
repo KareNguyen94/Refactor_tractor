@@ -12,12 +12,13 @@ import './images/seasoning.png'
 
 import User from './user';
 import Recipe from './recipe';
+import Pantry from './pantry';
 
 let menuOpen = false;
 let pantryInfo = [];
 let recipes = [];
 let searchInput = document.querySelector("#search-input");
-let tagList = document.querySelector(".tag-list");
+// let tagList = document.querySelector(".tag-list");
 let user;
 
 
@@ -127,6 +128,10 @@ function addToMyRecipes() {
       event.target.src = "../images/apple-logo-outline.png";
       user.removeRecipe(cardId);
     }
+  } else if (event.target.id === "exit-recipe-btn") {
+    domUpdates.exitRecipe();
+  } else if (isDescendant(event.target.closest(".card-photo-container"), event.target)) {
+    openRecipeInfo(event);
   }
 }
 
@@ -143,6 +148,16 @@ function addToCook() {
   }
 }
 
+const isDescendant = (parent, child) => {
+  let node = child;
+  while (node !== null) {
+    if (node === parent) {
+      return true;
+    }
+    node = node.parentNode;
+  }
+  return false;
+}
 
 const showSavedRecipes = () => {
   let unsavedRecipes = recipes.filter(recipe => {
@@ -187,7 +202,8 @@ const fetchRecipe = (recipe) => {
         const ingredient = data.ingredientsData.find(ingredient => ingredient.id == recipeIngredient.id)
         recipeIngredient.name = ingredient.name;
       })
-      domUpdates.generateRecipeTitle(recipe, generateIngredients(recipe))
+      domUpdates.generateRecipeTitle(recipe, 'Ingredients')
+      domUpdates.insertIngredients(generateIngredients(recipe));
       domUpdates.addRecipeImage(recipe);
       generateInstructions(recipe);
     })
@@ -310,8 +326,88 @@ const findRecipesWithCheckedIngredients = (selected) => {
       $(`#${recipe.id}`).hide();
     }
   })
+};
+
+function addOrRemoveIngredientsFromPantry(postBodies) {
+  postBodies.forEach(body => {
+    fetch("https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/users/wcUsersData", {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(body)
+    })
+    .then(response => console.log(response.json()))
+    .catch(error => error.message);
+  })
 }
 
+const replaceUser = (userData) => {
+  user = userData.find(userObj => userObj.id == user.id);
+  debugger;
+}
+
+//PANTRY
+const updatePantry = () => {
+  if (event.target.classList.contains('cook-now')){
+    const pantry = new Pantry(user.pantry)
+    let matchedRecipe = recipes.find(recipe => {
+      return recipe.id == event.target.parentElement.id
+    })
+    let isMatched = pantry.hasEnoughIngredientsForRecipe(matchedRecipe);
+    if(isMatched) {
+       domUpdates.showRecipeInstuctions();
+       domUpdates.generateRecipeTitle(matchedRecipe, 'Success! You have enough ingredients!')
+       domUpdates.insertIngredients(`<p>The Ingredients Have been removed from you pantry</p>`);
+       domUpdates.addRecipeImage(matchedRecipe);
+       domUpdates.applyOverlay();
+       const postBodies = pantry.buildPantryDeleteRequests(matchedRecipe, user.id);
+       addOrRemoveIngredientsFromPantry(postBodies);
+       receiveUserData('wcUsersData', 'users', replaceUser);
+    } else {
+      fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/ingredients/ingredientsData')
+        .then(response => response.json())
+        .then(data => {
+          let neededIngredients = pantry.ingredientsNeededForARecipe(matchedRecipe, data.ingredientsData)
+          showMissingIngredients(neededIngredients, matchedRecipe);
+        })
+    }
+  }
+};
+
+const addIngredientsToPantry = (event) => {
+  if(event.target.id === "add-ingredients-btn") {
+    let ingredients = event.target.parentElement.querySelectorAll('.amount-needed');
+    let postBodies = [];
+    ingredients.forEach(ingredient => {
+      let body = {
+        userID: user.id,
+        ingredientID: parseInt(ingredient.id),
+        ingredientModification: parseFloat(ingredient.innerText)
+      }
+      postBodies.push(body);
+    })
+    addOrRemoveIngredientsFromPantry(postBodies);
+    receiveUserData('wcUsersData', 'users', replaceUser);
+  }
+}
+
+
+const showMissingIngredients = (neededIngredients, recipe) => {
+  let missingIngredientHTML =  neededIngredients.reduce((html, ingredient) => {
+   html += `<p>${ingredient.name}</p>
+    <p id="${ingredient.id}" class="amount-needed">${ingredient.amountNeeded}</p>`
+    return html
+  }, ``)
+  domUpdates.showRecipeInstuctions();
+  domUpdates.generateRecipeTitle(recipe, 'Missing Ingredients')
+  domUpdates.insertButton();
+  domUpdates.insertIngredients(missingIngredientHTML);
+  domUpdates.addRecipeImage(recipe);
+  domUpdates.applyOverlay();
+}
+
+$("main").click(updatePantry);
 $('.show-pantry-recipes-btn').click(findCheckedPantryBoxes);
 $('.show-all-btn').click(showRecipesHandler);
 $('.my-pantry-btn').click(toggleMenu);
@@ -323,6 +419,6 @@ $('.chef-hat').click(showToCookRecipes);
 $('main').click(addToMyRecipes);
 $('main').click(addToCook);
 $('main').click(showInstructions)
-
+$('#recipe-instructions-card').click(addIngredientsToPantry)
 receiveUserData('wcUsersData', 'users', getUserData);
 receiveUserData('recipeData', 'recipes', getRecipeData);

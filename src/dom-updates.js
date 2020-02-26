@@ -20,8 +20,9 @@ let domUpdates = {
         </div>
       </div>
       <h4>${recipeInfo.tags[0]}</h4>
-      <button type='button' class="card-button"><img src="../images/cookbook.svg" alt="chef hat icon" class="chef-hat"></button>
-      <button type='button' class="card-button"><img src="../images/apple-logo-outline.png" alt="unfilled apple icon" class="card-apple-icon"></button>
+      <button class='cook-now'>cook now</button>
+      <img src="../images/cookbook.svg" alt="chef hat icon" class="chef-hat">
+      <img src="../images/apple-logo-outline.png" alt="unfilled apple icon" class="card-apple-icon">
     </div>`);
     },
 
@@ -48,20 +49,24 @@ let domUpdates = {
 
   showRecipeInstuctions() {
     $(".recipe-instructions").css('display', 'inline')
-    $(".recipe-instructions").append("<div id='inner-instructions'></div>")
+    $(".recipe-instructions").append(`
+      <div id='inner-instructions'>
+        <button id="exit-recipe-btn" class="exit-recipe-button">X</button>
+      </div>`)
   },
 
   applyOverlay() {
     $(".recipe-instructions").before("<section id='overlay'></div>")
   },
 
-  generateRecipeTitle(recipe, ingredients) {
+  generateRecipeTitle(recipe, title) {
     $("#inner-instructions").append(`
-      <button id="exit-recipe-btn" class="exit-recipe-button">X</button>
       <h3 id="recipe-title" class="recipe-header">${recipe.name}</h3>
-      <h4>Ingredients</h4>
-      <p>${ingredients}</p>`)
+      <h4>${title}</h4>`)
+  },
 
+  insertIngredients(ingredientHTML) {
+    $("#inner-instructions").append(`<p>${ingredientHTML}</p>`);
   },
 
   addRecipeImage(recipe) {
@@ -98,8 +103,11 @@ let domUpdates = {
         <label for="${ingredient.name}">${ingredient.name}, ${ingredient.count}</label></li>`;
       $(".pantry-list").append(ingredientHtml);
     });
-  }
+  },
 
+  insertButton() {
+    $("#inner-instructions").append(`<button id="add-ingredients-btn">Add Missing Ingredients to Pantry</button>`)
+  }
 }
 
 export default domUpdates;
