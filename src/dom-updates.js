@@ -112,13 +112,6 @@ let domUpdates = {
   insertButton() {
     $("#inner-instructions").append(`<button id="add-ingredients-btn">Add Missing Ingredients to Pantry</button>`)
   }
-  // showWelcomeBanner() {
-  //   // $(".welcome-msg").css('display', "flex");
-  //   $(".welcome-msg").show();
-  //   $(".my-recipes-banner").hide()
-  // },
-
-
 
 
 
