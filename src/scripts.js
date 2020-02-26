@@ -331,11 +331,11 @@ $('.show-pantry-recipes-btn').click(findCheckedPantryBoxes);
 $('.show-all-btn').click(showRecipesHandler);
 $('.my-pantry-btn').click(toggleMenu);
 $('.search-btn').click(searchRecipes);
-$('#search').submit(pressEnterSearch);
+$('#search').on('keyup', pressEnterSearch);
 $(".filter-btn").click(findCheckedBoxes);
 $(".apple").click(showSavedRecipes);
 $('.chef-hat').click(showToCookRecipes);
-$('main').click(addToMyRecipes);  
+$('main').click(addToMyRecipes);
 $('main').click(addToCook);
 $('main').click(showInstructions)
 
