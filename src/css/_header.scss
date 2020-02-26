@@ -42,7 +42,7 @@ span {
   flex-direction: row;
   font-family: $main-font;
   justify-content: center;
-  margin: 1.2% 0.5% 1.2% 0%;
+  margin: 1.2% 9.5% 1.2% 0%;
   width: 100%;
 }
 
@@ -60,6 +60,7 @@ span {
   text-align: right;
   transition: $slow-ease-in;
   width: 100%;
+  min-width: 4em;
 }
 
 .search-field:hover {
@@ -93,31 +94,6 @@ span {
   padding: 1%;
 }
 
-// .nav-btn {
-//   align-items: center;
-//   background: $dark-blue no-repeat;
-//   border: none;
-//   cursor: pointer;
-//   display: flex;
-//   flex-direction: column;
-//   font-size: 0px;
-//   font-weight: 700;
-//   justify-content: center;
-//   margin: 0%;
-//   outline: none;
-//   overflow: hidden;
-//   text-align: center;
-//   transition: .4s ease;
-//   width: 15%;
-// }
-
-// .nav-btn:hover {
-//   color: $light-green;
-//   font-size: 14px;
-//   text-shadow: 0px 2px 4px black;
-//   transition: .4s ease;
-// }
-
 .nav-btn img {
   max-height: 40px;
   max-width: 40px;
@@ -125,10 +101,10 @@ span {
 }
 
 .saved-ingredients-btn {
- 
+
 }
 
 .ing-pan-btn {
-  margin: 1% 0%;
+  margin: 1% 4%;
   padding: 1px 6px 5px 0px;
 }

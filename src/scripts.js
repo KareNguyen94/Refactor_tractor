@@ -53,6 +53,7 @@ const getRecipeData = (recipeData) => {
   createRecipeHandler(recipeData);
   findTags(recipeData);
 };
+
 // FILTER BY RECIPE TAGS
 const findTags = (recipeData) => {
   let tags = [];
@@ -64,16 +65,11 @@ const findTags = (recipeData) => {
     });
   });
   tags.sort();
-  // listTags(tags); // will need to run domUpdates here
   domUpdates.listTags(tags)
 };
 
 
 const findCheckedBoxes = () => {
-  // let tagCheckboxes = $(".checked-tag");
-  // let checkboxInfo = Array.from(tagCheckboxes)
-  // let checkboxInfo = Array.from($(".checked-tag"))
-  // let selectedTags = checkboxInfo.filter(box => {
   let selectedTags = [...$(".checked-tag")].filter(box => {
     return box.checked;
   })
@@ -147,16 +143,6 @@ function addToCook() {
   }
 }
 
-// const isDescendant = (parent, child) => {
-//   let node = child;
-//   while (node !== null) {
-//     if (node === parent) {
-//       return true;
-//     }
-//     node = node.parentNode;
-//   }
-//   return false;
-// }
 
 const showSavedRecipes = () => {
   let unsavedRecipes = recipes.filter(recipe => {
@@ -211,7 +197,6 @@ const fetchRecipe = (recipe) => {
 const generateIngredients = (recipe) => {
   return recipe && recipe.ingredients.map(i => {
     return `${i.name} (${i.quantity.amount} ${i.quantity.unit})`
-    // add method of capitalize back in when we figure out ingredients
   }).join(", ");
 }
 
@@ -331,11 +316,11 @@ $('.show-pantry-recipes-btn').click(findCheckedPantryBoxes);
 $('.show-all-btn').click(showRecipesHandler);
 $('.my-pantry-btn').click(toggleMenu);
 $('.search-btn').click(searchRecipes);
-$('#search').submit(pressEnterSearch);
+$('#search').on('keyup', pressEnterSearch);
 $(".filter-btn").click(findCheckedBoxes);
 $(".apple").click(showSavedRecipes);
 $('.chef-hat').click(showToCookRecipes);
-$('main').click(addToMyRecipes);  
+$('main').click(addToMyRecipes);
 $('main').click(addToCook);
 $('main').click(showInstructions)
 
