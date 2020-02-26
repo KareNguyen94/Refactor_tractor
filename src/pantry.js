@@ -67,7 +67,7 @@ class Pantry {
       postRequests.push({
         userID: userID,
         ingredientID: recipeIngredient.id,
-        ingredientModification: -Math.abs(recipeIngredient.quantity.amount)
+        ingredientModification: -Math.abs(parseFloat(recipeIngredient.quantity.amount))
       });
       return postRequests
     }, [])
