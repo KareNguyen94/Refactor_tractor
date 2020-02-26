@@ -53,6 +53,7 @@ const getRecipeData = (recipeData) => {
   createRecipeHandler(recipeData);
   findTags(recipeData);
 };
+
 // FILTER BY RECIPE TAGS
 const findTags = (recipeData) => {
   let tags = [];
@@ -64,16 +65,11 @@ const findTags = (recipeData) => {
     });
   });
   tags.sort();
-  // listTags(tags); // will need to run domUpdates here
   domUpdates.listTags(tags)
 };
 
 
 const findCheckedBoxes = () => {
-  // let tagCheckboxes = $(".checked-tag");
-  // let checkboxInfo = Array.from(tagCheckboxes)
-  // let checkboxInfo = Array.from($(".checked-tag"))
-  // let selectedTags = checkboxInfo.filter(box => {
   let selectedTags = [...$(".checked-tag")].filter(box => {
     return box.checked;
   })
@@ -147,16 +143,6 @@ function addToCook() {
   }
 }
 
-// const isDescendant = (parent, child) => {
-//   let node = child;
-//   while (node !== null) {
-//     if (node === parent) {
-//       return true;
-//     }
-//     node = node.parentNode;
-//   }
-//   return false;
-// }
 
 const showSavedRecipes = () => {
   let unsavedRecipes = recipes.filter(recipe => {
@@ -211,7 +197,6 @@ const fetchRecipe = (recipe) => {
 const generateIngredients = (recipe) => {
   return recipe && recipe.ingredients.map(i => {
     return `${i.name} (${i.quantity.amount} ${i.quantity.unit})`
-    // add method of capitalize back in when we figure out ingredients
   }).join(", ");
 }
 
