@@ -332,6 +332,20 @@ const findRecipesWithCheckedIngredients = (selected) => {
   })
 };
 
+function addOrRemoveIngredientsFromPantry(postBodies) {
+  postBodies.forEach(body => {
+    fetch("https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/users/wcUsersData", {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(body)
+    })
+    .then(response => console.log(response.json()))
+    .catch(error => error.message);
+  })
+}
+
 //PANTRY
 const updatePantry = () => {
   if (event.target.classList.contains('cook-now')){
@@ -341,10 +355,13 @@ const updatePantry = () => {
     })
     let isMatched = pantry.hasEnoughIngredientsForRecipe(matchedRecipe);
     if(isMatched) {
-       console.log('you have enough')
+       domUpdates.showRecipeInstuctions();
+       domUpdates.generateRecipeTitle(matchedRecipe, `<p>The Ingredients Have been removed from you pantry</p>`, 'Success! You have enough ingredients!')
+       domUpdates.addRecipeImage(matchedRecipe);
+       domUpdates.applyOverlay();
+       const postBodies = pantry.buildPantryDeleteRequests(matchedRecipe, user.id);
+       addOrRemoveIngredientsFromPantry(postBodies);
     } else {
-      console.log('oops! need more ingredients')
-
       fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/ingredients/ingredientsData')
         .then(response => response.json())
         .then(data => {
@@ -364,9 +381,8 @@ const showMissingIngredients = (neededIngredients, recipe) => {
   domUpdates.showRecipeInstuctions();
   domUpdates.generateRecipeTitle(recipe, missingIngredientHTML, 'Missing Ingredients')
   domUpdates.addRecipeImage(recipe);
+  domUpdates.applyOverlay();
 }
-
-
 
 $("main").click(updatePantry);
 $('.show-pantry-recipes-btn').click(findCheckedPantryBoxes);

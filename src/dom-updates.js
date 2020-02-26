@@ -49,7 +49,10 @@ let domUpdates = {
 
   showRecipeInstuctions() {
     $(".recipe-instructions").css('display', 'inline')
-    $(".recipe-instructions").append("<div id='inner-instructions'></div>")
+    $(".recipe-instructions").append(`
+      <div id='inner-instructions'>
+        <button id="exit-recipe-btn" class="exit-recipe-button">X</button>
+      </div>`)
   },
 
   applyOverlay() {
@@ -62,7 +65,6 @@ let domUpdates = {
 
   generateRecipeTitle(recipe, ingredients, title) {
     $("#inner-instructions").append(`
-      <button id="exit-recipe-btn" class="exit-recipe-button">X</button>
       <h3 id="recipe-title" class="recipe-header">${recipe.name}</h3>
       <h4>${title}</h4>
       <p>${ingredients}</p>`)

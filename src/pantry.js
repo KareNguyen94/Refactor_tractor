@@ -65,9 +65,9 @@ class Pantry {
   buildPantryDeleteRequests(matchedRecipe, userID) {
     return matchedRecipe.ingredients.reduce((postRequests, recipeIngredient) => {
       postRequests.push({
-        userId: userID,
+        userID: userID,
         ingredientID: recipeIngredient.id,
-        ingredientModification: recipeIngredient.quantity.amount
+        ingredientModification: -Math.abs(recipeIngredient.quantity.amount)
       });
       return postRequests
     }, [])
