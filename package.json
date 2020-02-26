@@ -11,7 +11,8 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/turingschool-examples/webpack-starter-kit.git"
+    "url": "git+https://github.com/karenguyen94/Refactor_tractor.git",
+    "homepage": "http://karenguyen94.github.io/Refactor_tractor"
   },
   "author": "Turing School of Software and Design",
   "license": "MIT",
