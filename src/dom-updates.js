@@ -58,10 +58,6 @@ let domUpdates = {
   applyOverlay() {
     $(".recipe-instructions").before("<section id='overlay'></div>")
   },
-  // showMyRecipesBanner() {
-  //   $(".welcome-msg").hide()
-  //   $('.my-recipes-banner').show()
-  // },
 
   generateRecipeTitle(recipe, title) {
     $("#inner-instructions").append(`
@@ -112,9 +108,6 @@ let domUpdates = {
   insertButton() {
     $("#inner-instructions").append(`<button id="add-ingredients-btn">Add Missing Ingredients to Pantry</button>`)
   }
-
-
-
 }
 
 export default domUpdates;
